@@ -1,5 +1,7 @@
 list
 todo read book
+delete -1
+delete 1
 deadline return book /by Sunday
 event project meeting /from Aug 6th 2pm /to 4pm
 list

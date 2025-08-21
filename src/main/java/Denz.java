@@ -81,7 +81,7 @@ public class Denz {
     }
     private static void unmarkTask(ArrayList<Task> arr, int index) throws MarkException {
         if (index < 0 || index >= arr.size()){
-            throw new MarkException("invalid task number!!");
+            throw new MarkException("Invalid task number!!");
         }
         else if (!arr.get(index).isDone()) {
             throw new MarkException("the task is not even completed!");
@@ -91,6 +91,18 @@ public class Denz {
             task.unmark();
             System.out.println("Yay! I have successfully unmarked this task as done:");
             System.out.println(task);
+        }
+    }
+    private static void deleteTask(ArrayList<Task> arr, int index) throws DeleteException {
+        if (index < 0 || index >= arr.size()) {
+            throw new DeleteException("invalid task number!!");
+        }
+        else {
+            Task t = arr.get(index);
+            System.out.println("Alright slacker, i have removed this task:");
+            System.out.println(t);
+            arr.remove(index);
+            System.out.println("Now you have " + arr.size() + " tasks in the list");
         }
     }
     public static void main(String[] args) {
@@ -110,8 +122,20 @@ public class Denz {
         ArrayList<Task> userInputs = new ArrayList<>();
         while (sc.hasNextLine()){
             String line = sc.nextLine().trim(); //trim all white spaces
-            String[] parts = line.trim().split("\\s+"); //split by white spaces
-            if (parts[0].equalsIgnoreCase("mark") && parts.length == 2){
+            String[] parts = line.trim().split("\\s+");//split by white spaces
+            if (parts[0].equalsIgnoreCase("delete") && parts.length == 2) {
+                try {
+                    int index = Integer.parseInt(parts[1]);
+                    deleteTask(userInputs, index-1);
+                }
+                catch (NumberFormatException e) {
+                    System.out.println("invalid task index to delete");
+                }
+                catch (DeleteException d) {
+                    System.out.println(d.getMessage());
+                }
+            }
+            else if (parts[0].equalsIgnoreCase("mark") && parts.length == 2){
                 try {
                     int index = Integer.parseInt(parts[1]);
                     markTask(userInputs, index-1);
@@ -164,7 +188,6 @@ public class Denz {
                     System.out.println(a.getMessage());
                 }
             }
-
         }
         sc.close();
     }

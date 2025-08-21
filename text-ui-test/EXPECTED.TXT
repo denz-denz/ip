@@ -13,20 +13,23 @@ Here is everything you have on your plate :(
 Roger! I have added this task:
     [T] [ ] read book
 Now you have 1 tasks in the list.
+invalid task number!!
+Alright slacker, i have removed this task:
+[T] [ ] read book
+Now you have 0 tasks in the list
 Roger! I have added this task:
     [D] [ ] return book(by: Sunday)
-Now you have 2 tasks in the list.
+Now you have 1 tasks in the list.
 Roger! I have added this task:
     [E] [ ] project meeting(from: Aug 6th 2pm to: 4pm)
-Now you have 3 tasks in the list.
+Now you have 2 tasks in the list.
 Here is everything you have on your plate :(
-1. [T] [ ] read book
-2. [D] [ ] return book(by: Sunday)
-3. [E] [ ] project meeting(from: Aug 6th 2pm to: 4pm)
+1. [D] [ ] return book(by: Sunday)
+2. [E] [ ] project meeting(from: Aug 6th 2pm to: 4pm)
 Yay! I have successfully marked this task as done:
-[D] [X] return book(by: Sunday)
+[E] [X] project meeting(from: Aug 6th 2pm to: 4pm)
 Yay! I have successfully unmarked this task as done:
-[D] [ ] return book(by: Sunday)
+[E] [ ] project meeting(from: Aug 6th 2pm to: 4pm)
 wthelly, you're trolling me right. You are missing the task description
 I do not have a clue what you want me to add
 invalid task number!!
