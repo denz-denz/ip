@@ -10,5 +10,6 @@ unmark 2
 todo
 blah
 mark -1
+unmark -2
 bye denz
 bye
