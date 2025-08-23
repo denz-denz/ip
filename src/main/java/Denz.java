@@ -11,7 +11,19 @@ public class Denz {
             return false;
         }
     }
-    private static void Bye(String line) throws ByeException {
+    private static void greet() {
+        String logo = " ____  _____ _   _ _____\n"
+                + "|  _ \\| ____| \\ | |__  /\n"
+                + "| | | |  _| |  \\| | / /\n"
+                + "| |_| | |___| |\\  |/ /_|\n"
+                + "|____/|_____|_| \\_|____|\n";
+        System.out.println("Hello from\n" + logo);
+        System.out.println(newLine);
+        System.out.println("Hello, I'm Denz");
+        System.out.println("What can I do for you?");
+        System.out.println(newLine);
+    }
+    private static void bye(String line) throws ByeException {
         if (!line.startsWith("bye")) {
             throw new ByeException("invalid command to exit");
         }
@@ -23,6 +35,12 @@ public class Denz {
             System.out.println("    Finally, time to take a break!");
             System.out.println(newLine);
             System.exit(0);
+        }
+    }
+    private static void printList(ArrayList<Task> arr){
+        System.out.println("Here is everything you have on your plate :(");
+        for (int i = 0; i < arr.size(); i ++){
+            System.out.println(i+1 + ". " + arr.get(i));
         }
     }
     private static void addTask(ArrayList<Task> arr, String command) throws AddException{
@@ -107,17 +125,7 @@ public class Denz {
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        //String formatting
-        String logo = " ____  _____ _   _ _____\n"
-                + "|  _ \\| ____| \\ | |__  /\n"
-                + "| | | |  _| |  \\| | / /\n"
-                + "| |_| | |___| |\\  |/ /_|\n"
-                + "|____/|_____|_| \\_|____|\n";
-        System.out.println("Hello from\n" + logo);
-        System.out.println(newLine);
-        System.out.println("Hello, I'm Denz");
-        System.out.println("What can I do for you?");
-        System.out.println(newLine);
+        greet();
         //real code starts here
         ArrayList<Task> userInputs = new ArrayList<>();
         while (sc.hasNextLine()){
@@ -127,11 +135,9 @@ public class Denz {
                 try {
                     int index = Integer.parseInt(parts[1]);
                     deleteTask(userInputs, index-1);
-                }
-                catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     System.out.println("invalid task index to delete");
-                }
-                catch (DeleteException d) {
+                } catch (DeleteException d) {
                     System.out.println(d.getMessage());
                 }
             }
@@ -139,11 +145,9 @@ public class Denz {
                 try {
                     int index = Integer.parseInt(parts[1]);
                     markTask(userInputs, index-1);
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e){
                     System.out.println("invalid task index to mark");
-                }
-                catch (MarkException m) {
+                } catch (MarkException m) {
                     System.out.println(m.getMessage());
                 }
             }
@@ -151,29 +155,23 @@ public class Denz {
                 try {
                     int index = Integer.parseInt(parts[1]);
                     unmarkTask(userInputs, index-1);
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e){
                     System.out.println("invalid task index to mark");
-                }
-                catch (MarkException m){
+                } catch (MarkException m){
                     System.out.println(m.getMessage());
                 }
             }
             //exit chatbot
             else if (line.startsWith("bye")){
                 try {
-                    Bye(line);
-                }
-                catch (ByeException b){
+                    bye(line);
+                } catch (ByeException b){
                     System.out.println(b.getMessage());
                 }
             }
             //display list
             else if (line.equalsIgnoreCase("list")){
-                System.out.println("Here is everything you have on your plate :(");
-                for (int i = 0; i < userInputs.size(); i ++){
-                    System.out.println(i+1 + ". " + userInputs.get(i));
-                }
+                printList(userInputs);
             }
             //ignore if no words
             else if (line.equals("")){
@@ -183,8 +181,7 @@ public class Denz {
             else{
                 try{
                     addTask(userInputs, line);
-                }
-                catch (AddException a) {
+                } catch (AddException a) {
                     System.out.println(a.getMessage());
                 }
             }
