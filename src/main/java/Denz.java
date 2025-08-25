@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.nio.file.Paths;
 public class Denz {
     static String newLine = "--------------------------------------------------";
     //check if a string is a valid integer
@@ -124,17 +125,18 @@ public class Denz {
         }
     }
     public static void main(String[] args) {
+        Storage storage = new Storage("./data/denz.txt");
+        ArrayList<Task> tasks = storage.load();
         Scanner sc = new Scanner(System.in);
         greet();
-        //real code starts here
-        ArrayList<Task> userInputs = new ArrayList<>();
         while (sc.hasNextLine()){
             String line = sc.nextLine().trim(); //trim all white spaces
             String[] parts = line.trim().split("\\s+");//split by white spaces
             if (parts[0].equalsIgnoreCase("delete") && parts.length == 2) {
                 try {
                     int index = Integer.parseInt(parts[1]);
-                    deleteTask(userInputs, index-1);
+                    deleteTask(tasks, index-1);
+                    storage.save(tasks);
                 } catch (NumberFormatException e) {
                     System.out.println("invalid task index to delete");
                 } catch (DeleteException d) {
@@ -144,7 +146,8 @@ public class Denz {
             else if (parts[0].equalsIgnoreCase("mark") && parts.length == 2){
                 try {
                     int index = Integer.parseInt(parts[1]);
-                    markTask(userInputs, index-1);
+                    markTask(tasks, index-1);
+                    storage.save(tasks);
                 } catch (NumberFormatException e){
                     System.out.println("invalid task index to mark");
                 } catch (MarkException m) {
@@ -154,7 +157,8 @@ public class Denz {
             else if (parts[0].equalsIgnoreCase("unmark") && parts.length == 2){
                 try {
                     int index = Integer.parseInt(parts[1]);
-                    unmarkTask(userInputs, index-1);
+                    unmarkTask(tasks, index-1);
+                    storage.save(tasks);
                 } catch (NumberFormatException e){
                     System.out.println("invalid task index to mark");
                 } catch (MarkException m){
@@ -171,7 +175,7 @@ public class Denz {
             }
             //display list
             else if (line.equalsIgnoreCase("list")){
-                printList(userInputs);
+                printList(tasks);
             }
             //ignore if no words
             else if (line.equals("")){
@@ -180,7 +184,8 @@ public class Denz {
             //add task to list
             else{
                 try{
-                    addTask(userInputs, line);
+                    addTask(tasks, line);
+                    storage.save(tasks);
                 } catch (AddException a) {
                     System.out.println(a.getMessage());
                 }
