@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 public class Denz {
     static String newLine = "--------------------------------------------------";
-    //check if a string is a valid integer
     private static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
@@ -40,12 +39,6 @@ public class Denz {
             System.out.println("    Finally, time to take a break!");
             System.out.println(newLine);
             System.exit(0);
-        }
-    }
-    private static void printList(ArrayList<Task> arr){
-        System.out.println("Here is everything you have on your plate :(");
-        for (int i = 0; i < arr.size(); i ++){
-            System.out.println(i+1 + ". " + arr.get(i));
         }
     }
     private static void addTask(TaskList arr, String command) throws AddException{
@@ -91,111 +84,74 @@ public class Denz {
         System.out.println("Now you have " + arr.size() + " tasks in the list.");
     }
 
-    private static void markTask(ArrayList<Task> arr, int index) throws MarkException {
-        if (index < 0 || index >= arr.size()){
-            throw new MarkException("invalid task number!!");
-        }
-        else if (arr.get(index).isDone()) {
-            throw new MarkException("the task is already completed!");
-        }
-        else {
-            Task task = arr.get(index);
-            task.mark();
-            System.out.println("Yay! I have successfully marked this task as done:");
-            System.out.println(task);
-        }
-    }
-    private static void unmarkTask(ArrayList<Task> arr, int index) throws MarkException {
-        if (index < 0 || index >= arr.size()){
-            throw new MarkException("Invalid task number!!");
-        }
-        else if (!arr.get(index).isDone()) {
-            throw new MarkException("the task is not even completed!");
-        }
-        else {
-            Task task = arr.get(index);
-            task.unmark();
-            System.out.println("Yay! I have successfully unmarked this task as done:");
-            System.out.println(task);
-        }
-    }
-    private static void deleteTask(ArrayList<Task> arr, int index) throws DeleteException {
-        if (index < 0 || index >= arr.size()) {
-            throw new DeleteException("invalid task number!!");
-        }
-        else {
-            Task t = arr.get(index);
-            System.out.println("Alright slacker, i have removed this task:");
-            System.out.println(t);
-            arr.remove(index);
-            System.out.println("Now you have " + arr.size() + " tasks in the list");
-        }
-    }
     public static void main(String[] args) {
         Storage storage = new Storage("./data/denz.txt");
         TaskList tasks = storage.load();
-        Scanner sc = new Scanner(System.in);
+        Ui ui = new Ui();
+        ui.showWelcome();
+        //Scanner sc = new Scanner(System.in);
         greet();
-        while (sc.hasNextLine()){
-            String line = sc.nextLine().trim(); //trim all white spaces
-            String[] parts = line.trim().split("\\s+");//split by white spaces
-            if (parts[0].equalsIgnoreCase("delete") && parts.length == 2) {
+        while (true) {
+            String line = ui.readCommand();
+            if (line.isEmpty()) {
+                continue;
+            }
+            //String line = sc.nextLine().trim(); //trim all white spaces
+            String[] parts = line.split("\\s+");//split by white spaces
+            String cmd = parts[0].toLowerCase();
+            if (cmd.equals("delete") && parts.length == 2) {
                 try {
                     int index = Integer.parseInt(parts[1]);
-                    Task removed = tasks.getList().get(index-1);
-                    tasks.delete(index);
-                    System.out.println("Alright slacker, i have removed this task:");
-                    System.out.println(removed);
-                    System.out.println("Now you have " + tasks.size() + " tasks in the list");
+                    Task removed = tasks.delete(index);
+                    ui.show("Alright slacker, i have removed this task:");
+                    ui.show(removed.toString());
+                    ui.show("Now you have " + tasks.size() + " tasks in the list");
                     storage.save(tasks);
                 } catch (NumberFormatException e) {
-                    System.out.println("invalid task index to delete");
+                    ui.show("invalid task index to delete");
                 } catch (DeleteException d) {
-                    System.out.println(d.getMessage());
+                    ui.show(d.getMessage());
                 }
             }
             else if (parts[0].equalsIgnoreCase("mark") && parts.length == 2){
                 try {
                     int index = Integer.parseInt(parts[1]);
                     tasks.mark(index);
-                    System.out.println("Yay! I have successfully marked this task as done:");
-                    System.out.println(tasks.getList().get(index-1));
+                    ui.showMark(tasks.get(index-1));
                     storage.save(tasks);
                 } catch (NumberFormatException e){
-                    System.out.println("invalid task index to mark");
+                    ui.showError("invalid task index to mark");
                 } catch (MarkException m) {
-                    System.out.println(m.getMessage());
+                    ui.showError(m.getMessage());
                 }
             }
             else if (parts[0].equalsIgnoreCase("unmark") && parts.length == 2){
                 try {
                     int index = Integer.parseInt(parts[1]);
                     tasks.unmark(index);
-                    System.out.println("Yay, I have successfully marked this task as done:");
-                    System.out.println(tasks.getList().get(index-1));
+                    ui.showUnmark(tasks.get(index-1));
                     storage.save(tasks);
                 } catch (NumberFormatException e){
-                    System.out.println("invalid task index to mark");
+                    ui.showError("invalid task index to mark");
                 } catch (MarkException m){
-                    System.out.println(m.getMessage());
+                    ui.showError(m.getMessage());
                 }
             }
             //exit chatbot
             else if (line.startsWith("bye")){
                 try {
-                    bye(line);
+                    bye("bye");
+                    ui.showBye();
+                    ui.close();
                 } catch (ByeException b){
-                    System.out.println(b.getMessage());
+                    ui.showError(b.getMessage());
                 }
             }
             //display list
             else if (line.equalsIgnoreCase("list")){
-                System.out.println(tasks.render());
+                ui.show(tasks.render());
             }
-            //ignore if no words
-            else if (line.equals("")){
-                continue;
-            }
+
             //add task to list
             else{
                 try{
@@ -206,6 +162,6 @@ public class Denz {
                 }
             }
         }
-        sc.close();
+
     }
 }
