@@ -101,7 +101,7 @@ public class Denz {
 
             if (cmd.equals("delete")) {
                 try {
-                    int index = Parser.parseIndex(rest);
+                    int index = Parser.parseDelete(rest);
                     Task removed = tasks.delete(index);
                     ui.show("Alright slacker, i have removed this task:");
                     ui.show(removed.toString());
@@ -109,34 +109,34 @@ public class Denz {
                     storage.save(tasks);
                 } catch (DeleteException e) {
                     ui.showError(e.getMessage());
-                } catch (DenzException e) {
+                } catch (IndexException e) {
                     ui.showError(e.getMessage());
                 }
             } else if (cmd.equals("mark")) {
                 try {
-                    int index = Parser.parseIndex(rest);
+                    int index = Parser.parseMark(rest);
                     tasks.mark(index);
                     ui.showMark(tasks.get(index - 1));
                     storage.save(tasks);
-                } catch (MarkException e) {
-                    ui.showError(e.getMessage());
-                } catch (DenzException e) {
+                } catch (MarkException m) {
+                    ui.showError(m.getMessage());
+                } catch (IndexException e) {
                     ui.showError(e.getMessage());
                 } catch (NumberFormatException e) {
                     ui.showError("invalid task index to mark");
                 }
             } else if (cmd.equals("unmark")) {
                 try {
-                    int index = Parser.parseIndex(rest);
+                    int index = Parser.parseUnmark(rest);
                     tasks.unmark(index);
                     ui.showUnmark(tasks.get(index - 1));
                     storage.save(tasks);
                 } catch (NumberFormatException e) {
                     ui.showError("invalid task index to mark");
+                } catch (IndexException i) {
+                    ui.showError(i.getMessage());
                 } catch (MarkException m) {
                     ui.showError(m.getMessage());
-                } catch (DenzException e) {
-                    ui.showError(e.getMessage());
                 }
             }
             //exit chatbot

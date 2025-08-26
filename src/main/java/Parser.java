@@ -12,12 +12,23 @@ public class Parser {
     }
 
     /** One-based index like "3" -> 3, else throws with your message. */
-    public static int parseIndex(String token) throws DenzException {
+    public static int parseIndex(String token, String errorMessage) throws IndexException {
         try {
             return Integer.parseInt(token.trim());
         } catch (NumberFormatException e) {
-            throw new DenzException("failed to identify task number");
+            throw new IndexException(errorMessage);
         }
+    }
+    public static int parseMark(String rest) throws IndexException {
+        return parseIndex(rest, "invalid task index to mark");
+    }
+
+    public static int parseUnmark(String rest) throws IndexException {
+        return parseIndex(rest, "invalid task index to unmark");
+    }
+
+    public static int parseDelete(String rest) throws IndexException {
+        return parseIndex(rest, "invalid task index to delete");
     }
 
     /** Validate "bye" must have nothing after it. */
