@@ -6,7 +6,7 @@ Hello from
 |____/|_____|_| \_|____|
 
 --------------------------------------------------
-Hello, I'm Denz
+Hello, I'm denz.app.Denz
 What can I do for you?
 --------------------------------------------------
 Here is everything you have on your plate :(
