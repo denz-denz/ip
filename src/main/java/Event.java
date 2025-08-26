@@ -1,21 +1,27 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Event extends Task{
     private String description;
     private boolean isDone;
-    private String startDate;
-    private String endDate;
-    public Event(String description, String startDate, String endDate){
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    public Event(String description, LocalDateTime startDate, LocalDateTime endDate){
         super(description);
         this.startDate = startDate;
         this.endDate = endDate;
     }
-    public String getStartDate(){
+    public LocalDateTime getStartDate(){
         return this.startDate;
     }
-    public String getEndDate(){
+    public LocalDateTime getEndDate(){
         return this.endDate;
     }
     @Override
     public String toString(){
-        return "[E] " + super.toString() + "(from: " + this.getStartDate() + " to: " + this.getEndDate() + ")";
+        DateTimeFormatter F = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
+        return "[E] " + super.toString() + "(from: " + this.getStartDate().format(F) + " to: " + this.getEndDate().format(F) + ")";
     }
 }

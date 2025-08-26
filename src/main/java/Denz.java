@@ -1,6 +1,10 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 public class Denz {
     static String newLine = "--------------------------------------------------";
     //check if a string is a valid integer
@@ -60,7 +64,8 @@ public class Denz {
             if (description.isEmpty()) {
                 throw new AddException("wthelly, you're trolling me right. You are missing the task description");
             }
-            String dueDate = segment[1].trim();
+            String dueDateString = segment[1].trim();
+            LocalDateTime dueDate = DateTimeUtil.parse(dueDateString);
             t = new Deadline(description, dueDate);
         }
         else if (command.startsWith("event")){
@@ -71,8 +76,10 @@ public class Denz {
                 throw new AddException("wthelly, you're trolling me right. You are missing the task description");
             }
             String[] secondSplit = firstSplit[1].split("/to",2);
-            String startDate = secondSplit[0].trim();
-            String endDate = secondSplit[1].trim();
+            String startDateString = secondSplit[0].trim();
+            String endDateString = secondSplit[1].trim();
+            LocalDateTime startDate = DateTimeUtil.parse(startDateString);
+            LocalDateTime endDate = DateTimeUtil.parse(endDateString);
             t = new Event(description, startDate, endDate);
         }
         else {

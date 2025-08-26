@@ -1,17 +1,22 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 public class Deadline extends Task{
     private String description;
     private boolean isDone;
-    private String dueDate;
-    public Deadline(String description, String dueDate){
+    private final LocalDateTime dueDate;
+    public Deadline(String description, LocalDateTime dueDate){
         super(description);
         this.dueDate = dueDate;
     }
-    public String getDueDate(){
+    public LocalDateTime getDueDate(){
         return this.dueDate;
     }
     @Override
     public String toString(){
-        return "[D] " + super.toString() + "(by: " + this.getDueDate() + ")";
+        DateTimeFormatter F = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
+        return "[D] " + super.toString() + "(by: " + this.getDueDate().format(F) + ")";
     }
 
 }
