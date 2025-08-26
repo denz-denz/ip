@@ -96,72 +96,78 @@ public class Denz {
             if (line.isEmpty()) {
                 continue;
             }
-            //String line = sc.nextLine().trim(); //trim all white spaces
-            String[] parts = line.split("\\s+");//split by white spaces
-            String cmd = parts[0].toLowerCase();
-            if (cmd.equals("delete") && parts.length == 2) {
+            String cmd = Parser.commandWord(line);
+            String rest = Parser.rest(line);
+
+            if (cmd.equals("delete")) {
                 try {
-                    int index = Integer.parseInt(parts[1]);
+                    int index = Parser.parseIndex(rest);
                     Task removed = tasks.delete(index);
                     ui.show("Alright slacker, i have removed this task:");
                     ui.show(removed.toString());
                     ui.show("Now you have " + tasks.size() + " tasks in the list");
                     storage.save(tasks);
-                } catch (NumberFormatException e) {
-                    ui.show("invalid task index to delete");
-                } catch (DeleteException d) {
-                    ui.show(d.getMessage());
+                } catch (DeleteException e) {
+                    ui.showError(e.getMessage());
+                } catch (DenzException e) {
+                    ui.showError(e.getMessage());
                 }
-            }
-            else if (parts[0].equalsIgnoreCase("mark") && parts.length == 2){
+            } else if (cmd.equals("mark")) {
                 try {
-                    int index = Integer.parseInt(parts[1]);
+                    int index = Parser.parseIndex(rest);
                     tasks.mark(index);
-                    ui.showMark(tasks.get(index-1));
+                    ui.showMark(tasks.get(index - 1));
                     storage.save(tasks);
-                } catch (NumberFormatException e){
+                } catch (MarkException e) {
+                    ui.showError(e.getMessage());
+                } catch (DenzException e) {
+                    ui.showError(e.getMessage());
+                } catch (NumberFormatException e) {
+                    ui.showError("invalid task index to mark");
+                }
+            } else if (cmd.equals("unmark")) {
+                try {
+                    int index = Parser.parseIndex(rest);
+                    tasks.unmark(index);
+                    ui.showUnmark(tasks.get(index - 1));
+                    storage.save(tasks);
+                } catch (NumberFormatException e) {
                     ui.showError("invalid task index to mark");
                 } catch (MarkException m) {
                     ui.showError(m.getMessage());
-                }
-            }
-            else if (parts[0].equalsIgnoreCase("unmark") && parts.length == 2){
-                try {
-                    int index = Integer.parseInt(parts[1]);
-                    tasks.unmark(index);
-                    ui.showUnmark(tasks.get(index-1));
-                    storage.save(tasks);
-                } catch (NumberFormatException e){
-                    ui.showError("invalid task index to mark");
-                } catch (MarkException m){
-                    ui.showError(m.getMessage());
+                } catch (DenzException e) {
+                    ui.showError(e.getMessage());
                 }
             }
             //exit chatbot
-            else if (line.startsWith("bye")){
+            else if (cmd.equals("bye")) {
                 try {
-                    bye("bye");
+                    Parser.validateBye(line);
                     ui.showBye();
                     ui.close();
-                } catch (ByeException b){
+                    return;
+                } catch (ByeException b) {
                     ui.showError(b.getMessage());
                 }
             }
             //display list
-            else if (line.equalsIgnoreCase("list")){
+            else if (line.equalsIgnoreCase("list")) {
                 ui.show(tasks.render());
             }
 
             //add task to list
-            else{
-                try{
-                    addTask(tasks, line);
+            else {
+                try {
+                    Task t = Parser.parseAdd(line);
+                    tasks.add(t);
+                    ui.showTaskAdded(t, tasks.size());
                     storage.save(tasks);
                 } catch (AddException a) {
                     System.out.println(a.getMessage());
                 }
             }
         }
-
     }
+
 }
+
