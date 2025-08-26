@@ -11,7 +11,7 @@ public class Storage {
     public Storage(String filePath){
         this.path = Paths.get(filePath);
     }
-    public ArrayList<Task> load(){
+    public TaskList load(){
         ArrayList<Task> tasks = new ArrayList<>();
         try {
             //if parent directory not made yet, creates parent directory
@@ -21,7 +21,7 @@ public class Storage {
             //if filename don't exist, create file and return empty list
             if (!Files.exists(path)) {
                 Files.createFile(path);
-                return tasks;
+                return new TaskList(tasks);
             }
             List<String> lines = Files.readAllLines(path);
             for (String line : lines) {
@@ -38,11 +38,11 @@ public class Storage {
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
-        return tasks;
+        return new TaskList(tasks);
     }
-    public void save(List<Task> tasks) {
+    public void save(TaskList tasks) {
         List<String> lines = new ArrayList<>();
-        for (Task t : tasks) {
+        for (Task t : tasks.getList()) {
             lines.add(TaskIO.toSaveLine(t));
         }
         try {
