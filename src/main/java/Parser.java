@@ -1,14 +1,37 @@
 import java.time.LocalDateTime;
-public class Parser {
-    public static String commandWord(String line) {
-        String[] parts = line.trim().split("\\s+", 2);
-        return parts.length == 0 ? "" : parts[0].toLowerCase();
-    }
+import java.util.List;
 
-    /** Everything after the command word (may be empty). */
-    public static String rest(String line) {
-        String[] parts = line.trim().split("\\s+", 2);
-        return (parts.length > 1) ? parts[1] : "";
+public class Parser {
+
+    public static Command parse(String input) throws DenzException {
+        String line = input.trim();
+        if (line.isEmpty()) {
+            return new NoOpCommand();
+        }
+        String[] parts = line.split("\\s+", 2);
+        String cmd = parts[0].toLowerCase();
+        String rest = (parts.length > 1) ? parts[1] : "";
+        if (cmd.equals("list")) {
+            return new ListCommand();
+        }
+        else if (cmd.equals("bye")) {
+            return parseBye(line);
+        }
+        else if (cmd.equals("todo") || cmd.equals("deadline") || cmd.equals("event")) {
+            return parseAdd(line);
+        }
+        else if (cmd.equals("mark")) {
+            return parseMark(rest);
+        }
+        else if (cmd.equals("unmark")) {
+            return parseUnmark(rest);
+        }
+        else if (cmd.equals("delete")) {
+            return parseDelete(rest);
+        }
+        else {
+            throw new DenzException("I have no idea what you want: " + cmd);
+        }
     }
 
     /** One-based index like "3" -> 3, else throws with your message. */
@@ -19,40 +42,42 @@ public class Parser {
             throw new IndexException(errorMessage);
         }
     }
-    public static int parseMark(String rest) throws IndexException {
-        return parseIndex(rest, "invalid task index to mark");
+    public static Command parseMark(String rest) throws IndexException {
+        return new MarkCommand(parseIndex(rest, "invalid task index to mark"));
     }
 
-    public static int parseUnmark(String rest) throws IndexException {
-        return parseIndex(rest, "invalid task index to unmark");
+    public static Command parseUnmark(String rest) throws IndexException {
+        return new UnmarkCommand(parseIndex(rest, "invalid task index to unmark"));
     }
 
-    public static int parseDelete(String rest) throws IndexException {
-        return parseIndex(rest, "invalid task index to delete");
+    public static Command parseDelete(String rest) throws IndexException {
+        return new DeleteCommand(parseIndex(rest, "invalid task index to delete"));
     }
 
     /** Validate "bye" must have nothing after it. */
-    public static void validateBye(String line) throws ByeException {
+    public static Command parseBye(String line) throws ByeException {
         if (!line.startsWith("bye")) {
             throw new ByeException("invalid command to exit");
         }
         if (!line.substring(3).isEmpty()){
             throw new ByeException("just say bye, dont add anything after bye");
         }
+        return new ByeCommand();
     }
 
     /** Build a Task from a full add command (todo|deadline|event ...). */
-    public static Task parseAdd(String fullLine) throws AddException {
-        String cmd = commandWord(fullLine);
+    public static Command parseAdd(String fullLine) throws AddException {
         String line = fullLine.trim();
-
+        String[] parts = line.split("\\s+", 2);
+        String cmd = parts[0].toLowerCase();
+        String rest = (parts.length > 1) ? parts[1] : "";
         switch (cmd) {
         case "todo": {
             String description = line.substring(4).trim();
             if (description.isEmpty()) {
                 throw new AddException("You're trolling me right. You are missing the task description");
             }
-            return new Todo(description);
+            return new AddTodoCommand(description);
         }
 
         case "deadline": {
@@ -66,7 +91,7 @@ public class Parser {
                 throw new AddException("wthelly, you're trolling me right. You are missing the task description");
             }
             LocalDateTime by = DateTimeUtil.parse(seg[1].trim());
-            return new Deadline(description, by);
+            return new AddDeadlineCommand(description, by);
         }
 
         case "event": {
@@ -88,7 +113,7 @@ public class Parser {
             if (!end.isAfter(start)) {
                 throw new AddException("Event end must be after start.");
             }
-            return new Event(description, start, end);
+            return new AddEventCommand(description, start, end);
         }
 
         default:

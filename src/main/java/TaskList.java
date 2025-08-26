@@ -12,8 +12,8 @@ public class TaskList {
         return tasks.size();
     }
 
-    public Task get(int index) {
-        return tasks.get(index);
+    public Task get(int oneBased) {
+        return tasks.get(oneBased - 1);
     }
 
     public ArrayList<Task> getList() {
