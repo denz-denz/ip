@@ -2,7 +2,6 @@ package denz.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import denz.util.DateTimeUtil;
 public class Deadline extends Task {
     private String description;
     private boolean isDone;
