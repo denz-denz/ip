@@ -1,9 +1,20 @@
 package denz.parser;
 
-import denz.command.*;
+import denz.command.AddDeadlineCommand;
+import denz.command.AddEventCommand;
+import denz.command.AddTodoCommand;
+import denz.command.ByeCommand;
+import denz.command.Command;
+import denz.command.DeleteCommand;
+import denz.command.FindCommand;
+import denz.command.ListCommand;
+import denz.command.MarkCommand;
+import denz.command.NoOpCommand;
+import denz.command.UnmarkCommand;
 import denz.exception.AddException;
 import denz.exception.ByeException;
 import denz.exception.DenzException;
+import denz.exception.FindException;
 import denz.exception.IndexException;
 import denz.util.DateTimeUtil;
 
@@ -29,6 +40,7 @@ public class Parser {
         String[] parts = line.split("\\s+", 2);
         String cmd = parts[0].toLowerCase();
         String rest = (parts.length > 1) ? parts[1] : "";
+
         if (cmd.equals("list")) {
             return new ListCommand();
         } else if (cmd.equals("bye")) {
@@ -41,6 +53,8 @@ public class Parser {
             return parseUnmark(rest);
         } else if (cmd.equals("delete")) {
             return parseDelete(rest);
+        } else if (cmd.equals("find")) {
+            return parseFind(line);
         } else {
             throw new DenzException("I have no idea what you want: " + cmd);
         }
@@ -145,7 +159,6 @@ public class Parser {
             LocalDateTime by = DateTimeUtil.parse(seg[1].trim());
             return new AddDeadlineCommand(description, by);
         }
-
         case "event": {
             String body = line.substring(5).trim();
             String[] s1 = body.split("\\s*/from\\s*", 2);
@@ -170,6 +183,25 @@ public class Parser {
         default:
             throw new AddException("I do not have a clue what you want me to add");
         }
+    }
+
+    /**
+     * Parses a {@code find} command from the user input.
+     * <p>
+     * Expected format: {@code find <keyword>}.
+     *
+     * @param fullLine the full user input string containing the find command
+     * @return a {@link FindCommand} initialized with the search keyword
+     * @throws DenzException if the user input does not include a keyword
+     */
+    public static Command parseFind(String fullLine) throws DenzException {
+        String line = fullLine.trim();
+        String[] parts = line.split("\\s+", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new FindException("What do you want me to find???");
+        }
+        String rest = parts[1].trim();
+        return new FindCommand(rest);
     }
 }
 

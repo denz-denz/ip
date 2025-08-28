@@ -6,6 +6,9 @@ import denz.exception.MarkException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TaskListTest {
 
     @Test
@@ -100,5 +103,33 @@ public class TaskListTest {
         list.add(new Todo("x"));
         assertThrows(denz.exception.DenzException.class, () -> list.get(0));
         assertThrows(denz.exception.DenzException.class, () -> list.get(2));
+    }
+
+    @Test
+    void find_exact_keyword_success() {
+        TaskList list = new TaskList();
+        Task t = new Todo("gym");
+        list.add(t);
+        List<Task> dummy = new ArrayList<>();
+        dummy.add(t);
+        assertEquals(list.find("gym"), dummy);
+    }
+
+    @Test
+    void find_prefix_keyword_success() {
+        TaskList list = new TaskList();
+        Task t = new Todo("gym");
+        list.add(t);
+        List<Task> dummy = new ArrayList<>();
+        dummy.add(t);
+        assertEquals(list.find("gy"), dummy);
+    }
+
+    @Test
+    void find_keyword_failure() {
+        TaskList list = new TaskList();
+        Task t = new Todo("gym");
+        list.add(t);
+        assertEquals(list.find("no such task"), new ArrayList<>());
     }
 }
