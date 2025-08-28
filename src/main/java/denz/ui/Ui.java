@@ -34,7 +34,7 @@ public class Ui {
 
     public void showError(String msg) {
         System.out.println(msg);
-    } // keep exact wording for tests
+    }
 
     public void showList(String renderedList) {
         System.out.println(renderedList);

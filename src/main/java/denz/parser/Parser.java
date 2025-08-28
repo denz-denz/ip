@@ -20,23 +20,17 @@ public class Parser {
         String rest = (parts.length > 1) ? parts[1] : "";
         if (cmd.equals("list")) {
             return new ListCommand();
-        }
-        else if (cmd.equals("bye")) {
+        } else if (cmd.equals("bye")) {
             return parseBye(line);
-        }
-        else if (cmd.equals("todo") || cmd.equals("deadline") || cmd.equals("event")) {
+        } else if (cmd.equals("todo") || cmd.equals("deadline") || cmd.equals("event")) {
             return parseAdd(line);
-        }
-        else if (cmd.equals("mark")) {
+        } else if (cmd.equals("mark")) {
             return parseMark(rest);
-        }
-        else if (cmd.equals("unmark")) {
+        } else if (cmd.equals("unmark")) {
             return parseUnmark(rest);
-        }
-        else if (cmd.equals("delete")) {
+        } else if (cmd.equals("delete")) {
             return parseDelete(rest);
-        }
-        else {
+        } else {
             throw new DenzException("I have no idea what you want: " + cmd);
         }
     }
@@ -86,7 +80,6 @@ public class Parser {
             }
             return new AddTodoCommand(description);
         }
-
         case "deadline": {
             String body = line.substring(8).trim();
             String[] seg = body.split("\\s*/by\\s*", 2);
@@ -122,7 +115,6 @@ public class Parser {
             }
             return new AddEventCommand(description, start, end);
         }
-
         default:
             throw new AddException("I do not have a clue what you want me to add");
         }

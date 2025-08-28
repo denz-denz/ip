@@ -8,7 +8,9 @@ import denz.ui.Ui;
 
 public class MarkCommand extends Command {
     private final int oneBased;
-    public MarkCommand(int oneBased) { this.oneBased = oneBased; }
+    public MarkCommand(int oneBased) {
+        this.oneBased = oneBased;
+    }
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DenzException {
         try {

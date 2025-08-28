@@ -13,17 +13,15 @@ import java.util.List;
 //For storing data into a File
 public class Storage {
     private final Path path;
-    public Storage(String filePath){
+    public Storage(String filePath) {
         this.path = Paths.get(filePath);
     }
-    public TaskList load(){
+    public TaskList load() {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
-            //if parent directory not made yet, creates parent directory
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
             }
-            //if filename don't exist, create file and return empty list
             if (!Files.exists(path)) {
                 Files.createFile(path);
                 return new TaskList(tasks);
@@ -54,7 +52,6 @@ public class Storage {
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
             }
-            //if file exist, remove all contents and rewrite into that file, else create new empty file and begin writing
             Files.write(path, lines,
                     StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING);
@@ -62,5 +59,4 @@ public class Storage {
             System.out.println("Error writing save file: " + e.getMessage());
         }
     }
-
 }

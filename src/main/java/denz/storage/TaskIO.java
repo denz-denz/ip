@@ -42,20 +42,30 @@ public class TaskIO {
             switch (type) {
                 case "T": {
                     Todo t = new Todo(desc);
-                    if (done) t.mark();
+                    if (done) {
+                        t.mark();
+                    }
                     return t;
                 }
                 case "D": {
-                    if (parts.length < 4) throw new CorruptLineException("Bad deadline line: " + line);
+                    if (parts.length < 4) {
+                        throw new CorruptLineException("Bad deadline line: " + line);
+                    }
                     String dueDateString = parts[3].trim();
                     Deadline d = new Deadline(desc, DateTimeUtil.parse(dueDateString));
-                    if (done) d.mark();
+                    if (done) {
+                        d.mark();
+                    }
                     return d;
                 }
                 case "E": {
-                    if (parts.length < 5) throw new CorruptLineException("Bad event line: " + line);
+                    if (parts.length < 5) {
+                        throw new CorruptLineException("Bad event line: " + line);
+                    }
                     Event e = new Event(desc, DateTimeUtil.parse(parts[3].trim()), DateTimeUtil.parse(parts[4].trim()));
-                    if (done) e.mark();
+                    if (done) {
+                        e.mark();
+                    }
                     return e;
                 }
                 default:

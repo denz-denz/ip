@@ -3,24 +3,24 @@ package denz.model;
 public class Task {
     private String description;
     private boolean isDone;
-    public Task(String description){
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
-    public boolean isDone(){
+    public boolean isDone() {
         return this.isDone;
     }
     public void mark() {
         this.isDone = true;
     }
-    public void unmark(){
+    public void unmark() {
         this.isDone = false;
     }
     @Override
-    public String toString(){
+    public String toString() {
         return isDone ? "[X] " + this.getDescription() : "[ ] " + this.getDescription();
     }
 }

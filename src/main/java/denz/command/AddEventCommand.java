@@ -19,7 +19,9 @@ public class AddEventCommand extends Command {
         this.description = description.trim();
         this.start = start;
         this.end = end;
-        if (!end.isAfter(start)) throw new AddException("denz.model.Event end must be after start.");
+        if (!end.isAfter(start)) {
+            throw new AddException("denz.model.Event end must be after start.");
+        }
     }
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws AddException {

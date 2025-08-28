@@ -28,7 +28,6 @@ public class DateTimeUtil {
 
         String in = s.trim().replaceAll("\\s+", " ");
 
-        // Also accept strict ISO LocalDateTime like 2019-12-10T14:00
         try {
             return LocalDateTime.parse(in);
         } catch (DateTimeParseException ignored) {}
