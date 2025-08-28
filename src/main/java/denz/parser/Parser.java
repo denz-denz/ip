@@ -1,9 +1,11 @@
 package denz.parser;
 
+import denz.app.Denz;
 import denz.command.*;
 import denz.exception.AddException;
 import denz.exception.ByeException;
 import denz.exception.DenzException;
+import denz.exception.FindException;
 import denz.exception.IndexException;
 import denz.util.DateTimeUtil;
 import java.time.LocalDateTime;
@@ -35,8 +37,14 @@ public class Parser {
         }
         else if (cmd.equals("delete")) {
             return parseDelete(rest);
+<<<<<<< Updated upstream
         }
         else {
+=======
+        } else if (cmd.equals("find")) {
+            return parseFind(line);
+        } else {
+>>>>>>> Stashed changes
             throw new DenzException("I have no idea what you want: " + cmd);
         }
     }
@@ -126,6 +134,26 @@ public class Parser {
         default:
             throw new AddException("I do not have a clue what you want me to add");
         }
+    }
+
+    /**
+     * Parses a {@code find} command from the user input.
+     * <p>
+     * The expected format is: {@code find <keyword>}.
+     * If no keyword is provided, a {@link denz.exception.FindException} is thrown.
+     *
+     * @param fullLine the full user input string containing the find command
+     * @return a {@link FindCommand} initialized with the search keyword
+     * @throws DenzException if the user input does not include a keyword
+     */
+    public static Command parseFind(String fullLine) throws DenzException {
+        String line = fullLine.trim();
+        String[] parts = line.split("\\s+", 2);
+        if (parts.length < 2) {
+            throw new FindException("What do you want me to find???");
+        }
+        String rest = parts[1];
+        return new FindCommand(rest);
     }
 }
 

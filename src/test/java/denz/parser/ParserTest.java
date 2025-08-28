@@ -5,6 +5,7 @@ import denz.exception.AddException;
 import denz.exception.ByeException;
 import denz.exception.DenzException;
 import denz.exception.IndexException;
+import denz.exception.FindException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +23,13 @@ public class ParserTest {
         Command c = Parser.parse("list");
         assertTrue(c instanceof ListCommand);
     }
+
+    @Test
+    void parse_find_returnsFindCommand() throws DenzException {
+        Command cmd = Parser.parse("find book");
+        assertTrue(cmd instanceof FindCommand, "Expected a FindCommand instance");
+    }
+
 
     /* -------------------- BYE -------------------- */
 
@@ -102,6 +110,14 @@ public class ParserTest {
     @Test
     void parse_delete_withNonInteger_throwsIndexException() {
         assertThrows(IndexException.class, () -> Parser.parse("delete abc"));
+    }
+
+    @Test
+    void parse_find_missing_keyword_throws() {
+        assertThrows(FindException.class, () -> Parser.parse("find"),
+                "Expected FindException when keyword is missing");
+        assertThrows(FindException.class, () -> Parser.parse("find   "),
+                "Expected FindException when keyword is only spaces");
     }
 
     /* -------------------- UNKNOWN -------------------- */

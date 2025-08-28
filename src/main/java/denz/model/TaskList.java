@@ -6,6 +6,7 @@ import denz.exception.MarkException;
 import denz.exception.DeleteException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TaskList {
     private ArrayList<Task> tasks;
@@ -66,6 +67,37 @@ public class TaskList {
         StringBuilder sb = new StringBuilder("Here is everything you have on your plate :(");
         for (int i = 0; i < tasks.size(); i++) {
             sb.append("\n").append(i + 1).append(". ").append(tasks.get(i));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Finds a list of task based on a given keyword.
+     *
+     * @return A list of task with that given keyword
+     * @param keyword Keyword to find task by
+     */
+
+    public List<Task> find(String keyword) {
+        List<Task> out = new ArrayList<>();
+        String k = keyword.toLowerCase();
+        for (Task t : tasks) {
+            if (t.getDescription().toLowerCase().contains(k)) {
+                out.add(t);
+            }
+        }
+        return out;
+    }
+
+    /**
+     * Renders a numbered list for found tasks.
+     * @return String representation of tasklist provided
+     * @param matches Tasklist to be represented
+     * */
+    public String render(List<Task> matches) {
+        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:");
+        for (int i = 0; i < matches.size(); i++) {
+            sb.append("\n").append(i + 1).append(". ").append(matches.get(i));
         }
         return sb.toString();
     }
