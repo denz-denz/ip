@@ -3,6 +3,7 @@ package denz.storage;
 import denz.model.Task;
 import denz.model.TaskList;
 import denz.util.DateTimeUtil;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,20 +11,39 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-//For storing data into a File
+
+/**
+ * Handles reading from and writing tasks to a save file on disk.
+ */
 public class Storage {
+    /** Path to the save file. */
     private final Path path;
-    public Storage(String filePath){
+
+    /**
+     * Creates a new {@code Storage} object for a given file path.
+     *
+     * @param filePath the path to the save file
+     */
+    public Storage(String filePath) {
         this.path = Paths.get(filePath);
     }
-    public TaskList load(){
+
+    /**
+     * Loads tasks from the save file into a {@link TaskList}.
+     * <p>
+     * If the save file does not exist, a new one is created and an empty {@code TaskList} is returned.
+     * Malformed lines are skipped gracefully.
+     *
+     * @return a {@link TaskList} containing all successfully loaded tasks
+     */
+    public TaskList load() {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
-            //if parent directory not made yet, creates parent directory
+            // if parent directory not made yet, creates parent directory
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
             }
-            //if filename don't exist, create file and return empty list
+            // if filename doesn't exist, create file and return empty list
             if (!Files.exists(path)) {
                 Files.createFile(path);
                 return new TaskList(tasks);
@@ -34,7 +54,7 @@ public class Storage {
                     continue;
                 }
                 try {
-                    //converts line into a task and adds to list
+                    // converts line into a task and adds to list
                     tasks.add(TaskIO.fromSaveLine(line));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Skipping bad line " + line);
@@ -45,6 +65,14 @@ public class Storage {
         }
         return new TaskList(tasks);
     }
+
+    /**
+     * Saves a {@link TaskList} into the save file.
+     * <p>
+     * Overwrites the file contents if the file already exists, otherwise creates a new file.
+     *
+     * @param tasks the {@code TaskList} to save
+     */
     public void save(TaskList tasks) {
         List<String> lines = new ArrayList<>();
         for (Task t : tasks.getList()) {
@@ -54,7 +82,8 @@ public class Storage {
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
             }
-            //if file exist, remove all contents and rewrite into that file, else create new empty file and begin writing
+            // if file exists, remove all contents and rewrite into that file,
+            // else create new empty file and begin writing
             Files.write(path, lines,
                     StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING);
@@ -62,5 +91,4 @@ public class Storage {
             System.out.println("Error writing save file: " + e.getMessage());
         }
     }
-
 }

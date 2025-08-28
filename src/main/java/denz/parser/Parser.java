@@ -6,10 +6,21 @@ import denz.exception.ByeException;
 import denz.exception.DenzException;
 import denz.exception.IndexException;
 import denz.util.DateTimeUtil;
+
 import java.time.LocalDateTime;
 
+/**
+ * Parses raw user input into {@link Command} objects for execution.
+ */
 public class Parser {
 
+    /**
+     * Parses a full user input string and returns the corresponding {@link Command}.
+     *
+     * @param input raw user input string
+     * @return a {@link Command} representing the parsed user input
+     * @throws DenzException if the command is invalid or cannot be parsed
+     */
     public static Command parse(String input) throws DenzException {
         String line = input.trim();
         if (line.isEmpty()) {
@@ -20,28 +31,29 @@ public class Parser {
         String rest = (parts.length > 1) ? parts[1] : "";
         if (cmd.equals("list")) {
             return new ListCommand();
-        }
-        else if (cmd.equals("bye")) {
+        } else if (cmd.equals("bye")) {
             return parseBye(line);
-        }
-        else if (cmd.equals("todo") || cmd.equals("deadline") || cmd.equals("event")) {
+        } else if (cmd.equals("todo") || cmd.equals("deadline") || cmd.equals("event")) {
             return parseAdd(line);
-        }
-        else if (cmd.equals("mark")) {
+        } else if (cmd.equals("mark")) {
             return parseMark(rest);
-        }
-        else if (cmd.equals("unmark")) {
+        } else if (cmd.equals("unmark")) {
             return parseUnmark(rest);
-        }
-        else if (cmd.equals("delete")) {
+        } else if (cmd.equals("delete")) {
             return parseDelete(rest);
-        }
-        else {
+        } else {
             throw new DenzException("I have no idea what you want: " + cmd);
         }
     }
 
-    /** One-based index like "3" -> 3, else throws with your message. */
+    /**
+     * Parses a one-based index string into an integer.
+     *
+     * @param token        the string token containing the index
+     * @param errorMessage the error message to throw if parsing fails
+     * @return the parsed integer index
+     * @throws IndexException if the token is not a valid integer
+     */
     public static int parseIndex(String token, String errorMessage) throws IndexException {
         try {
             return Integer.parseInt(token.trim());
@@ -49,30 +61,64 @@ public class Parser {
             throw new IndexException(errorMessage);
         }
     }
+
+    /**
+     * Parses a mark command.
+     *
+     * @param rest the arguments after "mark"
+     * @return a {@link MarkCommand}
+     * @throws IndexException if the index is invalid
+     */
     public static Command parseMark(String rest) throws IndexException {
         return new MarkCommand(parseIndex(rest, "invalid task index to mark"));
     }
 
+    /**
+     * Parses an unmark command.
+     *
+     * @param rest the arguments after "unmark"
+     * @return an {@link UnmarkCommand}
+     * @throws IndexException if the index is invalid
+     */
     public static Command parseUnmark(String rest) throws IndexException {
         return new UnmarkCommand(parseIndex(rest, "invalid task index to unmark"));
     }
 
+    /**
+     * Parses a delete command.
+     *
+     * @param rest the arguments after "delete"
+     * @return a {@link DeleteCommand}
+     * @throws IndexException if the index is invalid
+     */
     public static Command parseDelete(String rest) throws IndexException {
         return new DeleteCommand(parseIndex(rest, "invalid task index to delete"));
     }
 
-    /** Validate "bye" must have nothing after it. */
+    /**
+     * Parses a bye command.
+     *
+     * @param line the full input line
+     * @return a {@link ByeCommand}
+     * @throws ByeException if extra text is present after "bye"
+     */
     public static Command parseBye(String line) throws ByeException {
         if (!line.startsWith("bye")) {
             throw new ByeException("invalid command to exit");
         }
-        if (!line.substring(3).isEmpty()){
+        if (!line.substring(3).isEmpty()) {
             throw new ByeException("just say bye, dont add anything after bye");
         }
         return new ByeCommand();
     }
 
-    /** Build a denz.model.Task from a full add command (todo|deadline|event ...). */
+    /**
+     * Parses a task-adding command (todo, deadline, or event).
+     *
+     * @param fullLine the full input line
+     * @return the corresponding {@link Command}
+     * @throws AddException if the input format is invalid
+     */
     public static Command parseAdd(String fullLine) throws AddException {
         String line = fullLine.trim();
         String[] parts = line.split("\\s+", 2);
@@ -116,7 +162,7 @@ public class Parser {
                 throw new AddException("Usage: event <description> /from <start> /to <end>");
             }
             LocalDateTime start = DateTimeUtil.parse(s2[0].trim());
-            LocalDateTime end   = DateTimeUtil.parse(s2[1].trim());
+            LocalDateTime end = DateTimeUtil.parse(s2[1].trim());
             if (!end.isAfter(start)) {
                 throw new AddException("denz.model.Event end must be after start.");
             }
