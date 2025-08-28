@@ -1,3 +1,5 @@
+package denz.storage;
+
 import denz.model.Todo;
 import denz.model.Task;
 import denz.model.Deadline;
@@ -36,7 +38,8 @@ public class TaskIO {
             return "D|" + (d.isDone() ? "1" : "0") + "|" + d.getDescription() + "|" + d.getDueDate();
         } else if (t instanceof Event) {
             Event e = (Event) t;
-            return "E|" + (e.isDone() ? "1" : "0") + "|" + e.getDescription() + "|" + e.getStartDate() + "|" + e.getEndDate();
+            return "E|" + (e.isDone() ? "1" : "0") + "|" + e.getDescription()
+                    + "|" + e.getStartDate() + "|" + e.getEndDate();
         } else {
             throw new IllegalArgumentException("Unknown task type");
         }
@@ -65,22 +68,34 @@ public class TaskIO {
             switch (type) {
             case "T": {
                 Todo t = new Todo(desc);
-                if (done) t.mark();
+                if (done) {
+                    t.mark();
+                }
                 return t;
             }
             case "D": {
-                if (parts.length < 4) throw new CorruptLineException("Bad deadline line: " + line);
+                if (parts.length < 4) {
+                    throw new CorruptLineException("Bad deadline line: " + line);
+                }
                 String dueDateString = parts[3].trim();
                 Deadline d = new Deadline(desc, DateTimeUtil.parse(dueDateString));
-                if (done) d.mark();
+                if (done) {
+                    d.mark();
+                }
                 return d;
             }
             case "E": {
-                if (parts.length < 5) throw new CorruptLineException("Bad event line: " + line);
-                Event e = new Event(desc,
+                if (parts.length < 5) {
+                    throw new CorruptLineException("Bad event line: " + line);
+                }
+                Event e = new Event(
+                        desc,
                         DateTimeUtil.parse(parts[3].trim()),
-                        DateTimeUtil.parse(parts[4].trim()));
-                if (done) e.mark();
+                        DateTimeUtil.parse(parts[4].trim())
+                );
+                if (done) {
+                    e.mark();
+                }
                 return e;
             }
             default:

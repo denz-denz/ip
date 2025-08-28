@@ -64,7 +64,7 @@ public class Ui {
      */
     public void showError(String msg) {
         System.out.println(msg);
-    } // keep exact wording for tests
+    }
 
     /**
      * Displays a rendered list of tasks.

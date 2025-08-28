@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Represents an {@link Task} that occurs during a specific time period.
+ * Represents a {@link Task} that occurs during a specific time period.
  * An event has a description, completion status, a start date/time, and an end date/time.
  */
 public class Event extends Task {
@@ -53,8 +53,8 @@ public class Event extends Task {
     @Override
     public String toString() {
         DateTimeFormatter F = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
-        return "[E] " + super.toString() + "(from: "
-                + this.getStartDate().format(F)
+        return "[E] " + super.toString()
+                + "(from: " + this.getStartDate().format(F)
                 + " to: " + this.getEndDate().format(F) + ")";
     }
 }

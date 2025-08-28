@@ -2,7 +2,6 @@ package denz.storage;
 
 import denz.model.Task;
 import denz.model.TaskList;
-import denz.util.DateTimeUtil;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -82,8 +81,7 @@ public class Storage {
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
             }
-            // if file exists, remove all contents and rewrite into that file,
-            // else create new empty file and begin writing
+            // If the file exists, truncate then write; else create and write.
             Files.write(path, lines,
                     StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING);

@@ -62,26 +62,27 @@ public class DateTimeUtil {
 
         String in = s.trim().replaceAll("\\s+", " ");
 
-        /** Try strict ISO LocalDateTime */
+        // Try strict ISO LocalDateTime
         try {
             return LocalDateTime.parse(in);
-        } catch (DateTimeParseException ignored) {}
+        } catch (DateTimeParseException ignored) { }
 
         // Try date+time formats
         for (DateTimeFormatter f : formats) {
             try {
                 return LocalDateTime.parse(in, f);
-            } catch (DateTimeParseException ignored) {}
+            } catch (DateTimeParseException ignored) { }
         }
 
-        /** Try date-only; default time = 00:00 */
+        // Try date-only; default time = 00:00
         for (DateTimeFormatter f : formats) {
             try {
                 return LocalDate.parse(in, f).atStartOfDay();
-            } catch (DateTimeParseException ignored) {}
+            } catch (DateTimeParseException ignored) { }
         }
 
-        throw new AddException("Invalid date/time. Try yyyy-MM-dd or d/M/yyyy, optionally with HHmm (e.g., 2019-12-02 1800).");
+        throw new AddException(
+                "Invalid date/time. Try yyyy-MM-dd or d/M/yyyy, optionally with HHmm (e.g., 2019-12-02 1800)."
+        );
     }
 }
-

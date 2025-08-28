@@ -132,7 +132,6 @@ public class Parser {
             }
             return new AddTodoCommand(description);
         }
-
         case "deadline": {
             String body = line.substring(8).trim();
             String[] seg = body.split("\\s*/by\\s*", 2);
@@ -168,7 +167,6 @@ public class Parser {
             }
             return new AddEventCommand(description, start, end);
         }
-
         default:
             throw new AddException("I do not have a clue what you want me to add");
         }
