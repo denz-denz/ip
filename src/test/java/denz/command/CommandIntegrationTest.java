@@ -1,0 +1,31 @@
+package denz.command;
+
+import denz.exception.DenzException;
+import denz.model.*;
+import denz.storage.Storage;
+import denz.ui.Ui;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import java.nio.file.Path;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CommandIntegrationTest {
+    static class SilentUi extends Ui {
+        @Override public void showTaskAdded(Task t, int size) { }
+        @Override public void showMark(Task t) { }
+        @Override public void showUnmark(Task t) { }
+        @Override public void showRemoved(Task t, int size) { }
+    }
+
+    @Test
+    void addTodo_then_mark(@TempDir Path tmp) throws DenzException {
+        Storage storage = new Storage(tmp.resolve("data/denz.txt").toString());
+        TaskList tasks = new TaskList();
+        Ui ui = new SilentUi();
+
+        new AddTodoCommand("read").execute(tasks, ui, storage);
+        assertEquals(1, tasks.size());
+        new MarkCommand(1).execute(tasks, ui, storage);
+        assertTrue(tasks.get(1).isDone());
+    }
+}

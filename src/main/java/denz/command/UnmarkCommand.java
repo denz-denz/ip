@@ -1,5 +1,6 @@
 package denz.command;
 
+import denz.exception.DenzException;
 import denz.exception.MarkException;
 import denz.model.TaskList;
 import denz.storage.Storage;
@@ -9,9 +10,13 @@ public class UnmarkCommand extends Command {
     private final int oneBased;
     public UnmarkCommand(int oneBased) { this.oneBased = oneBased; }
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws MarkException {
-        tasks.unmark(oneBased);
-        ui.showUnmark(tasks.get(oneBased));
-        storage.save(tasks);
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws DenzException {
+        try {
+            tasks.unmark(oneBased);
+            ui.showUnmark(tasks.get(oneBased));
+            storage.save(tasks);
+        } catch (DenzException e) {
+            ui.showError(e.getMessage());
+        }
     }
 }

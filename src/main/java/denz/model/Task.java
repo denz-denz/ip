@@ -13,7 +13,7 @@ public class Task {
     public boolean isDone(){
         return this.isDone;
     }
-    public void mark(){
+    public void mark() {
         this.isDone = true;
     }
     public void unmark(){

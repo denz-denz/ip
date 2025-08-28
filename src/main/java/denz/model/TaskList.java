@@ -1,5 +1,7 @@
 package denz.model;
 
+import denz.app.Denz;
+import denz.exception.DenzException;
 import denz.exception.MarkException;
 import denz.exception.DeleteException;
 
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 
 public class TaskList {
     private ArrayList<Task> tasks;
-    public TaskList(){
+    public TaskList() {
         this.tasks = new ArrayList<>();
     }
     public TaskList(ArrayList<Task> tasks) {
@@ -16,8 +18,10 @@ public class TaskList {
     public int size() {
         return tasks.size();
     }
-
-    public Task get(int oneBased) {
+    public Task get(int oneBased) throws DenzException {
+        if (oneBased <= 0 || oneBased > tasks.size()) {
+            throw new DenzException("Invalid number, unable to get task!");
+        }
         return tasks.get(oneBased - 1);
     }
 
