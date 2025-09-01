@@ -1,12 +1,13 @@
 package denz.command;
 
-import denz.model.TaskList;
+import java.time.LocalDateTime;
+
+import denz.exception.AddException;
 import denz.model.Deadline;
+import denz.model.Task;
+import denz.model.TaskList;
 import denz.storage.Storage;
 import denz.ui.Ui;
-import java.time.LocalDateTime;
-import denz.exception.AddException;
-import denz.model.Task;
 
 /**
  * Represents a command to add a {@link Deadline} task to the task list.

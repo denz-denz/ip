@@ -1,16 +1,20 @@
 package denz.util;
 
-import denz.exception.AddException;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import denz.exception.AddException;
 
 public class DateTimeUtilTest {
     /* ------------ ISO default ------------- */
 
     @Test
-    void parses_isoLocalDateTime_T_separator() throws AddException {
+    void parsesIsoLocalDateTimeTseparator() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("2019-12-10T14:00");
         assertEquals(LocalDateTime.of(2019, 12, 10, 14, 0), dt);
     }
@@ -18,31 +22,31 @@ public class DateTimeUtilTest {
     /* ------------ Date + time patterns ------------- */
 
     @Test
-    void parses_dash_with_time_HHmm() throws AddException {
+    void parsesDashWithTimeHHmm() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("2019-12-10 1400");
         assertEquals(LocalDateTime.of(2019, 12, 10, 14, 0), dt);
     }
 
     @Test
-    void parses_slash_with_time_HHmm() throws AddException {
+    void parsesSlashWithTimeHHmm() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("1/12/2019 0930");
         assertEquals(LocalDateTime.of(2019, 12, 1, 9, 30), dt);
     }
 
     @Test
-    void parses_dash_dMy_with_time() throws AddException {
+    void parsesDashDmyWithTime() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("1-12-2019 2359");
         assertEquals(LocalDateTime.of(2019, 12, 1, 23, 59), dt);
     }
 
     @Test
-    void parses_d_MMM_yyyy_with_time() throws AddException {
+    void parsesDMmmYyyyWithTime() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("2 Dec 2019 0800");
         assertEquals(LocalDateTime.of(2019, 12, 2, 8, 0), dt);
     }
 
     @Test
-    void parses_MMM_d_yyyy_with_time() throws AddException {
+    void parsesMmmDYyyyWithTime() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("Dec 2 2019 0800");
         assertEquals(LocalDateTime.of(2019, 12, 2, 8, 0), dt);
     }
@@ -50,19 +54,19 @@ public class DateTimeUtilTest {
     /* ------------ Date-only patterns (defaults to 00:00) ------------- */
 
     @Test
-    void parses_dateOnly_dash_defaults_midnight() throws AddException {
+    void parsesDateOnlyDashDefaultsMidnight() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("2019-12-10");
         assertEquals(LocalDate.of(2019, 12, 10).atStartOfDay(), dt);
     }
 
     @Test
-    void parses_dateOnly_slash_defaults_midnight() throws AddException {
+    void parsesDateOnlySlashDefaultsMidnight() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("2/12/2019");
         assertEquals(LocalDate.of(2019, 12, 2).atStartOfDay(), dt);
     }
 
     @Test
-    void parses_dateOnly_MMM_defaults_midnight() throws AddException {
+    void parsesDateOnlyDefaultsMidnight() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("Dec 2 2019");
         assertEquals(LocalDate.of(2019, 12, 2).atStartOfDay(), dt);
     }
@@ -70,7 +74,7 @@ public class DateTimeUtilTest {
     /* ------------ Whitespace normalization ------------- */
 
     @Test
-    void trims_and_collapses_spaces() throws AddException {
+    void trimsAndCollapsesSpaces() throws AddException {
         LocalDateTime dt = DateTimeUtil.parse("   2019-12-10    1400  ");
         assertEquals(LocalDateTime.of(2019, 12, 10, 14, 0), dt);
     }
@@ -78,12 +82,12 @@ public class DateTimeUtilTest {
     /* ------------ Invalid inputs ------------- */
 
     @Test
-    void invalid_string_throws() {
+    void invalidStringThrows() {
         assertThrows(denz.exception.AddException.class, () -> DateTimeUtil.parse("not-a-date"));
     }
 
     @Test
-    void impossible_date_throws() {
+    void impossibleDateThrows() {
         assertThrows(denz.exception.AddException.class, () -> DateTimeUtil.parse("2019 Dec 2"));
         assertThrows(denz.exception.AddException.class, () -> DateTimeUtil.parse("1800 2019/12/02"));
     }

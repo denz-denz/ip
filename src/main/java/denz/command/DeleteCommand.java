@@ -1,8 +1,8 @@
 package denz.command;
 
 import denz.exception.DenzException;
-import denz.model.TaskList;
 import denz.model.Task;
+import denz.model.TaskList;
 import denz.storage.Storage;
 import denz.ui.Ui;
 
@@ -35,7 +35,7 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DenzException {
-        Task removed = tasks.delete(oneBased);  // may throw DeleteException
+        Task removed = tasks.delete(oneBased); // may throw DeleteException
         ui.showRemoved(removed, tasks.size());
         storage.save(tasks);
     }

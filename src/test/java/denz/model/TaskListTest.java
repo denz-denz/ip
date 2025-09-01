@@ -1,20 +1,18 @@
 package denz.model;
 
-import denz.exception.DeleteException;
-import denz.exception.DenzException;
-import denz.exception.MarkException;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 public class TaskListTest {
 
     @Test
     public void size_initiallyZero() {
         TaskList list = new TaskList();
-        assertEquals(0,list.size());
+        assertEquals(0, list.size());
     }
 
     @Test
@@ -26,9 +24,9 @@ public class TaskListTest {
         assertEquals(2, list.size());
 
         String expected =
-                "Here is everything you have on your plate :(\n" +
-                        "1. [T] [ ] read book\n" +
-                        "2. [T] [ ] buy milk";
+                "Here is everything you have on your plate :(" + System.lineSeparator()
+                        + "1. [T] [ ] read book" + System.lineSeparator()
+                        + "2. [T] [ ] buy milk";
         assertEquals(expected, list.render());
     }
 
@@ -83,9 +81,9 @@ public class TaskListTest {
         assertEquals(2, list.size());
 
         String expected =
-                "Here is everything you have on your plate :(\n" +
-                        "1. [T] [ ] A\n" +
-                        "2. [T] [ ] C";
+                "Here is everything you have on your plate :(" + System.lineSeparator()
+                        + "1. [T] [ ] A" + System.lineSeparator()
+                        + "2. [T] [ ] C";
         assertEquals(expected, list.render());
     }
 

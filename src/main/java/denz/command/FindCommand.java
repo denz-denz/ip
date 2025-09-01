@@ -1,11 +1,11 @@
 package denz.command;
 
+import java.util.List;
+
 import denz.model.Task;
 import denz.model.TaskList;
 import denz.storage.Storage;
 import denz.ui.Ui;
-
-import java.util.List;
 
 /**
  * Represents a command that searches for tasks whose descriptions

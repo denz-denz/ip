@@ -1,9 +1,14 @@
 package denz.storage;
 
-import denz.model.*;
-import org.junit.jupiter.api.Test;
-import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDateTime;
+
+import org.junit.jupiter.api.Test;
+
+import denz.model.Deadline;
+import denz.model.Task;
+import denz.model.Todo;
 
 public class TaskIOTest {
     @Test
@@ -16,7 +21,7 @@ public class TaskIOTest {
 
     @Test
     void deadline_roundTrip() {
-        Deadline d = new Deadline("return", LocalDateTime.of(2019,12,10,14,0));
+        Deadline d = new Deadline("return", LocalDateTime.of(2019, 12, 10, 14, 0));
         String line = TaskIO.toSaveLine(d);
         Task back = TaskIO.fromSaveLine(line);
         assertEquals(d.toString(), back.toString());

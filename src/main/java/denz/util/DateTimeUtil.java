@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
 import denz.exception.AddException;
 
 /**
@@ -65,20 +66,26 @@ public class DateTimeUtil {
         // Try strict ISO LocalDateTime
         try {
             return LocalDateTime.parse(in);
-        } catch (DateTimeParseException ignored) { }
+        } catch (DateTimeParseException ignored) {
+            System.out.println(ignored.getMessage());
+        }
 
         // Try date+time formats
         for (DateTimeFormatter f : formats) {
             try {
                 return LocalDateTime.parse(in, f);
-            } catch (DateTimeParseException ignored) { }
+            } catch (DateTimeParseException ignored) {
+                System.out.println(ignored.getMessage());
+            }
         }
 
         // Try date-only; default time = 00:00
         for (DateTimeFormatter f : formats) {
             try {
                 return LocalDate.parse(in, f).atStartOfDay();
-            } catch (DateTimeParseException ignored) { }
+            } catch (DateTimeParseException ignored) {
+                System.out.println(ignored.getMessage());
+            }
         }
 
         throw new AddException(

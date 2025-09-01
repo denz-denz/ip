@@ -1,8 +1,8 @@
 package denz.command;
 
 import denz.exception.AddException;
-import denz.model.TaskList;
 import denz.model.Task;
+import denz.model.TaskList;
 import denz.model.Todo;
 import denz.storage.Storage;
 import denz.ui.Ui;

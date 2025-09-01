@@ -5,16 +5,16 @@ package denz.model;
  * A {@code Todo} is a {@link Task} without a deadline or time period.
  */
 public class Todo extends Task {
-    private String Description;
+    private String description;
     private boolean isDone;
 
     /**
      * Creates a {@code Todo} task with the given description.
      *
-     * @param Description Description of the task.
+     * @param description Description of the task.
      */
-    public Todo(String Description) {
-        super(Description);
+    public Todo(String description) {
+        super(description);
     }
 
     /**

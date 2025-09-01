@@ -3,9 +3,10 @@ package denz.app;
 import denz.command.Command;
 import denz.exception.DenzException;
 import denz.model.TaskList;
+import denz.parser.Parser;
 import denz.storage.Storage;
 import denz.ui.Ui;
-import denz.parser.Parser;
+
 
 /**
  * Entry point of the Denz application.

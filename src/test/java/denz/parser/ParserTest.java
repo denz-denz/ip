@@ -1,13 +1,15 @@
 package denz.parser;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
 import denz.command.*;
 import denz.exception.AddException;
 import denz.exception.ByeException;
 import denz.exception.DenzException;
-import denz.exception.IndexException;
 import denz.exception.FindException;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import denz.exception.IndexException;
 
 public class ParserTest {
     /* -------------------- BASIC / NO-OP -------------------- */

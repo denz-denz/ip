@@ -1,9 +1,9 @@
 package denz.command;
 
+import denz.exception.DenzException;
 import denz.model.TaskList;
 import denz.storage.Storage;
 import denz.ui.Ui;
-import denz.exception.DenzException;
 
 /**
  * Represents an abstract command in the application.

@@ -1,15 +1,15 @@
 package denz.storage;
 
-import denz.model.Task;
-import denz.model.TaskList;
-
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+
+import denz.model.Task;
+import denz.model.TaskList;
 
 /**
  * Handles reading from and writing tasks to a save file on disk.

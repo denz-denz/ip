@@ -1,10 +1,13 @@
 package denz.model;
 
-import denz.exception.MarkException;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.LocalDateTime;
 import java.time.Month;
-import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
 
 public class TaskTypesTest {
     /* -------------------- TODO -------------------- */
@@ -55,7 +58,7 @@ public class TaskTypesTest {
     @Test
     void event_toString_formats_and_mark_unmark() throws Exception {
         LocalDateTime start = LocalDateTime.of(2019, Month.DECEMBER, 10, 14, 0);
-        LocalDateTime end   = LocalDateTime.of(2019, Month.DECEMBER, 10, 16, 0);
+        LocalDateTime end = LocalDateTime.of(2019, Month.DECEMBER, 10, 16, 0);
         Event e = new Event("project meeting", start, end);
 
         // uses "MMM d yyyy HH:mm" for both start and end
@@ -71,7 +74,7 @@ public class TaskTypesTest {
     @Test
     void event_getters_return_same_values() {
         LocalDateTime start = LocalDateTime.of(2020, 1, 1, 9, 30);
-        LocalDateTime end   = LocalDateTime.of(2020, 1, 1, 11, 0);
+        LocalDateTime end = LocalDateTime.of(2020, 1, 1, 11, 0);
         Event e = new Event("kickoff", start, end);
 
         assertEquals(start, e.getStartDate());

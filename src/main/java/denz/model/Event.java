@@ -52,9 +52,9 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        DateTimeFormatter F = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
         return "[E] " + super.toString()
-                + "(from: " + this.getStartDate().format(F)
-                + " to: " + this.getEndDate().format(F) + ")";
+                + "(from: " + this.getStartDate().format(formatter)
+                + " to: " + this.getEndDate().format(formatter) + ")";
     }
 }

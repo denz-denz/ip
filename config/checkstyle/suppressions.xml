@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <suppress checks="JavadocType" files=".*Test\.java"/>
+    <suppress checks="MissingJavadocMethodCheck" files=".*Test\.java"/>
+    <!-- Suppress method naming rules for tests -->
+    <suppress checks="MethodName" files=".*Test\.java"/>
+    <suppress checks="AbbreviationAsWordInName" files=".*Test\.java"/>
+
+    <!-- Allow star imports in test classes (both normal and static) -->
+    <suppress checks="AvoidStarImport" files=".*Test\.java"/>
+    <suppress checks="AvoidStaticImport" files=".*Test\.java"/>
+</suppressions>

@@ -1,7 +1,8 @@
 package denz.ui;
 
-import denz.model.Task;
 import java.util.Scanner;
+
+import denz.model.Task;
 
 /**
  * Handles all interactions with the user.
@@ -11,14 +12,15 @@ import java.util.Scanner;
  * task additions, deletions, marking, unmarking, errors, and exit messages.
  */
 public class Ui {
-    private final Scanner sc = new Scanner(System.in);
     private static final String LINE = "--------------------------------------------------";
     private static final String LOGO =
-            " ____  _____ _   _ _____\n" +
-                    "|  _ \\| ____| \\ | |__  /\n" +
-                    "| | | |  _| |  \\| | / /\n" +
-                    "| |_| | |___| |\\  |/ /_|\n" +
-                    "|____/|_____|_| \\_|____|\n";
+                      " ____  _____ _   _ _____" + System.lineSeparator()
+                    + "|  _ \\| ____| \\ | |__  /" + System.lineSeparator()
+                    + "| | | |  _| |  \\| | / /" + System.lineSeparator()
+                    + "| |_| | |___| |\\  |/ /_|" + System.lineSeparator()
+                    + "|____/|_____|_| \\_|____|" + System.lineSeparator();
+
+    private final Scanner sc = new Scanner(System.in);
 
     /**
      * Displays the welcome message and ASCII logo when the program starts.

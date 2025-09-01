@@ -1,10 +1,13 @@
 package denz.storage;
 
-import denz.model.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.nio.file.Path;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import java.nio.file.Path;
-import static org.junit.jupiter.api.Assertions.*;
+
+import denz.model.*;
 
 public class StorageTest {
     @Test

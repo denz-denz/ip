@@ -1,11 +1,11 @@
 package denz.model;
 
-import denz.exception.DenzException;
-import denz.exception.MarkException;
-import denz.exception.DeleteException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import denz.exception.DeleteException;
+import denz.exception.DenzException;
+import denz.exception.MarkException;
 
 /**
  * Represents a list of {@link Task} objects.
@@ -136,12 +136,24 @@ public class TaskList {
     }
 
     /**
+     * Renders a numbered list for found tasks.
+     * @param matches Tasklist to be represented
+     * @return String representation of tasklist provided
+     * */
+    public String render(List<Task> matches) {
+        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:");
+        for (int i = 0; i < matches.size(); i++) {
+            sb.append("\n").append(i + 1).append(". ").append(matches.get(i));
+        }
+        return sb.toString();
+    }
+
+    /**
      * Finds a list of task based on a given keyword.
      *
-     * @return A list of task with that given keyword
      * @param keyword Keyword to find task by
+     * @return A list of task with that given keyword
      */
-
     public List<Task> find(String keyword) {
         List<Task> out = new ArrayList<>();
         String k = keyword.toLowerCase();
@@ -151,18 +163,5 @@ public class TaskList {
             }
         }
         return out;
-    }
-
-    /**
-     * Renders a numbered list for found tasks.
-     * @return String representation of tasklist provided
-     * @param matches Tasklist to be represented
-     * */
-    public String render(List<Task> matches) {
-        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:");
-        for (int i = 0; i < matches.size(); i++) {
-            sb.append("\n").append(i + 1).append(". ").append(matches.get(i));
-        }
-        return sb.toString();
     }
 }

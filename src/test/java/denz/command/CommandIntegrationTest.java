@@ -1,13 +1,17 @@
 package denz.command;
 
-import denz.exception.DenzException;
-import denz.model.*;
-import denz.storage.Storage;
-import denz.ui.Ui;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.nio.file.Path;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import java.nio.file.Path;
-import static org.junit.jupiter.api.Assertions.*;
+
+import denz.exception.DenzException;
+import denz.model.Task;
+import denz.model.TaskList;
+import denz.storage.Storage;
+import denz.ui.Ui;
 
 public class CommandIntegrationTest {
     static class SilentUi extends Ui {
