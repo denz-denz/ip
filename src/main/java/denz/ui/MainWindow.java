@@ -89,7 +89,6 @@ public class MainWindow {
         if (input == null || input.isBlank() || denz == null) {
             return;
         }
-
         String response;
         try {
             response = denz.getResponse(input);

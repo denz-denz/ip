@@ -151,15 +151,18 @@ public class TaskList {
     /**
      * Finds a list of task based on a given keyword.
      *
-     * @param keyword Keyword to find task by
+     * @param keywords Keywords to find task by
      * @return A list of task with that given keyword
      */
-    public List<Task> find(String keyword) {
+    public List<Task> find(String ... keywords) {
         List<Task> out = new ArrayList<>();
-        String k = keyword.toLowerCase();
         for (Task t : tasks) {
-            if (t.getDescription().toLowerCase().contains(k)) {
-                out.add(t);
+            for (String key : keywords) {
+                if (t.getDescription().toLowerCase().contains(key)) {
+                    if (!out.contains(t)) {
+                        out.add(t);
+                    }
+                }
             }
         }
         return out;
