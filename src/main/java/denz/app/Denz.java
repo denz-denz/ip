@@ -74,7 +74,7 @@ public class Denz {
         try {
             Command c = Parser.parse(input);
             String reply = c.executeGui(tasks, ui, storage);
-            return "Denz heard you!! " + reply;
+            return reply;
         } catch (DenzException e) {
             return ui.showErrorGui(e.getMessage());
         }

@@ -33,6 +33,7 @@
         <Button fx:id="sendButton" text="Send"
                 defaultButton="true"
                 prefWidth="70.0"
+                prefHeight="40.0"
                 AnchorPane.rightAnchor="10.0"
                 AnchorPane.bottomAnchor="10.0"
                 onAction="#handleUserInput"/>
