@@ -153,7 +153,7 @@ public class Parser {
             String body = line.substring(8).trim();
             String[] seg = body.split("\\s*/by\\s*", 2);
             if (seg.length < 2) {
-                throw new AddException("Usage: deadline <description> /by <yyyy-MM-dd[ HHmm]>");
+                throw new AddException("Invalid fields!");
             }
             String description = seg[0].trim();
             if (description.isEmpty()) {
@@ -166,7 +166,7 @@ public class Parser {
             String body = line.substring(5).trim();
             String[] s1 = body.split("\\s*/from\\s*", 2);
             if (s1.length < 2) {
-                throw new AddException("Usage: event <description> /from <start> /to <end>");
+                throw new AddException("Invalid fields!!");
             }
             String description = s1[0].trim();
             if (description.isEmpty()) {
@@ -174,12 +174,12 @@ public class Parser {
             }
             String[] s2 = s1[1].split("\\s*/to\\s*", 2);
             if (s2.length < 2) {
-                throw new AddException("Usage: event <description> /from <start> /to <end>");
+                throw new AddException("Invalid dates!!");
             }
             LocalDateTime start = DateTimeUtil.parse(s2[0].trim());
             LocalDateTime end = DateTimeUtil.parse(s2[1].trim());
             if (!end.isAfter(start)) {
-                throw new AddException("denz.model.Event end must be after start.");
+                throw new AddException("End date for event must be after start date.");
             }
             return new AddEventCommand(description, start, end);
         }

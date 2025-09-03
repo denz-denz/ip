@@ -1,0 +1,46 @@
+.dialog-box {
+    -fx-spacing: 10;
+    -fx-alignment: TOP_RIGHT;    /* user on the right by default */
+    -fx-padding: 4 8 4 8;
+}
+
+/* Base bubble look (apply to the Label) */
+.bubble {
+    -fx-padding: 10 14 10 14;
+    -fx-font-size: 16px;
+    -fx-text-fill: #1b1b1b;
+    -fx-background-insets: 0;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.3, 0, 2);
+
+    /* Ensure text wraps and grows */
+    -fx-wrap-text: true;
+    -fx-max-width: 320px; /* Prevent bubble from stretching across screen */
+    -fx-min-height: Region.USE_PREF_SIZE; /* Grow vertically with content */
+}
+}
+
+/* User (right) bubble — leafy tone + a “tail” hint via asymmetric radius */
+.user-bubble {
+    -fx-background-color: linear-gradient(to bottom right, #d9f0ff, #b3e0ff);
+    -fx-border-color: #4a90e2;
+    -fx-background-radius: 16 16 16 16;
+    -fx-border-radius:    16 16 16 16;
+    -fx-text-fill: #21331a;
+}
+
+/* Denz (left) bubble — parchment tone + tail on bottom-left */
+.denz-bubble {
+    -fx-background-color: linear-gradient(to bottom right, #fff6e5, #f0e1c8);
+    -fx-border-color: #b08a5b;
+    -fx-background-radius: 16 16 16 16;
+    -fx-border-radius:    16 16 16 16;
+    -fx-text-fill: #2a2116;
+}
+
+/* Avatar styling (optional) */
+#displayPicture {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.4, 2, 2);
+}

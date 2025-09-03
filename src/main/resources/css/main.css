@@ -1,0 +1,62 @@
+/* 🌴 Jungle Safari Theme 🌴 */
+.root {
+     -fx-background-image: url("/images/wallpaper.png");
+     -fx-background-size: cover;
+     -fx-background-repeat: no-repeat;
+     -fx-background-position: center center;
+
+ }
+
+/* Input field styled like a vine box */
+.text-field {
+    -fx-background-color: #eaf7e1; /* pale leaf green */
+    -fx-border-color: #4d7738;    /* dark jungle green border */
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-font: 16px "Comic Sans MS"; /* playful font */
+    -fx-text-fill: #2f3e1e; /* deep earthy text */
+}
+
+/* Send button like a jungle fruit 🍊 */
+.button {
+    -fx-background-color: #ff9933; /* orange mango */
+    -fx-text-fill: white;
+    -fx-font: bold 16px "Arial";
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+
+.button:hover {
+    -fx-background-color: #ffb84d; /* lighter mango */
+    -fx-font-size: 17px;
+}
+
+.button:pressed {
+    -fx-background-color: #cc6600; /* darker orange */
+}
+
+/* ScrollPane styled like vines 🌿 */
+.scroll-pane,
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+    -fx-border-color: #6b8e23; /* olive green vine border */
+}
+
+.scroll-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+/* Scrollbar vine look */
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #3e5e2b; /* jungle green */
+    -fx-background-radius: 10px;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}

@@ -65,9 +65,9 @@ public class MainWindow {
      */
     @FXML
     private void initialize() {
+        dialogContainer.setFillWidth(true);
         scrollPane.setFitToWidth(true);
         dialogContainer.setPadding(new Insets(10));
-        // auto-scroll to bottom when content grows
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 

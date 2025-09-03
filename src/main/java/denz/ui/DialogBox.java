@@ -1,13 +1,20 @@
 package denz.ui;
 
+import java.io.IOException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 /**
  * DialogBox class represents the UI for seeing your image and text when sending messages
@@ -19,26 +26,41 @@ import javafx.scene.layout.HBox;
  */
 public class DialogBox extends HBox {
 
-    private Label text;
+    @FXML
+    private Label dialog;
+
+    @FXML
     private ImageView displayPicture;
+
+    private final Region spacer = new Region();
 
     /**
      * Initialises a Dialog box which is seen as a speech box in the UI
-     * @param s String to display in box
-     * @param i Image to display in box
+     * @param text String to display in box
+     * @param img Image to display in box
      */
-    public DialogBox(String s, Image i) {
-        text = new Label(s);
-        text.setStyle("-fx-font-size: 16px;");
-        displayPicture = new ImageView(i);
+    private DialogBox(String text, Image img) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/denz/ui/DialogBox.fxml"));
+            fxmlLoader.setController(this);
+            fxmlLoader.setRoot(this);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        //styling the box
-        text.setWrapText(true);
-        displayPicture.setFitWidth(110.0);
-        displayPicture.setFitHeight(110.0);
-        this.setAlignment(Pos.TOP_RIGHT);
+        this.setMaxWidth(Double.MAX_VALUE);
 
-        this.getChildren().addAll(text, displayPicture);
+        dialog.setText(text);
+        displayPicture.setImage(img);
+        dialog.setWrapText(true);
+        dialog.setTextOverrun(OverrunStyle.CLIP);   // no "…"
+        dialog.setMaxWidth(Double.MAX_VALUE);       // let it expand
+        HBox.setHgrow(dialog, Priority.ALWAYS);     // use remaining row width
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        getChildren().clear();
+        getChildren().addAll(spacer, dialog, displayPicture);
+        getStyleClass().add("dialog-box");
     }
 
     private void flip() {
@@ -48,13 +70,16 @@ public class DialogBox extends HBox {
         this.getChildren().setAll(tmp);
     }
 
-    public static DialogBox getUserDialog(String s, Image i) {
-        return new DialogBox(s, i);
+    public static DialogBox getUserDialog(String text, Image img) {
+        DialogBox db = new DialogBox(text, img);
+        db.dialog.getStyleClass().addAll("bubble", "user-bubble");
+        return db;
     }
 
-    public static DialogBox getDenzDialog(String s, Image i) {
-        DialogBox dialogBox = new DialogBox(s, i);
-        dialogBox.flip();
-        return dialogBox;
+    public static DialogBox getDenzDialog(String text, Image img) {
+        DialogBox db = new DialogBox(text, img);
+        db.dialog.getStyleClass().addAll("bubble", "denz-bubble");
+        db.flip(); // left-align Denz
+        return db;
     }
 }
