@@ -6,6 +6,7 @@ import denz.model.TaskList;
 import denz.parser.Parser;
 import denz.storage.Storage;
 import denz.ui.Ui;
+import javafx.application.Platform;
 
 
 /**

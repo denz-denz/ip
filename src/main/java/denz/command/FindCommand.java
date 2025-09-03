@@ -13,15 +13,15 @@ import denz.ui.Ui;
  */
 public class FindCommand extends Command {
     /** Keyword used to filter tasks by description. */
-    private final String keyword;
+    private final String[] keywords;
 
     /**
      * Constructs a {@code FindCommand} with the given keyword.
      *
-     * @param keyword the search term to look for in task descriptions
+     * @param keywords the search term to look for in task descriptions
      */
-    public FindCommand(String keyword) {
-        this.keyword = keyword.trim();
+    public FindCommand(String ... keywords) {
+        this.keywords = keywords;
     }
 
     /**
@@ -35,9 +35,9 @@ public class FindCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        List<Task> matches = tasks.find(keyword);
+        List<Task> matches = tasks.find(keywords);
         if (matches.isEmpty()) {
-            ui.show("No matching tasks found for: " + keyword);
+            ui.show("No matching tasks found for: " + keywords);
             return;
         }
         ui.show(tasks.render(matches));
@@ -45,10 +45,10 @@ public class FindCommand extends Command {
 
     @Override
     public String executeGui(TaskList tasks, Ui ui, Storage storage) {
-        List<Task> matches = tasks.find(keyword);
+        List<Task> matches = tasks.find(keywords);
         String reply;
         if (matches.isEmpty()) {
-            reply = ui.showGui("No matching tasks found for: " + keyword);
+            reply = ui.showGui("No matching tasks found for: " + keywords);
             return reply;
         }
         reply = ui.showGui(tasks.render(matches));

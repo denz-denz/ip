@@ -1,6 +1,7 @@
 package denz.parser;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import denz.command.AddDeadlineCommand;
 import denz.command.AddEventCommand;
@@ -198,12 +199,12 @@ public class Parser {
      */
     public static Command parseFind(String fullLine) throws DenzException {
         String line = fullLine.trim();
-        String[] parts = line.split("\\s+", 2);
+        String[] parts = line.split("\\s+");
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
             throw new FindException("What do you want me to find???");
         }
-        String rest = parts[1].trim();
-        return new FindCommand(rest);
+        String[] keywords = Arrays.copyOfRange(parts, 1, parts.length);
+        return new FindCommand(keywords);
     }
 }
 
