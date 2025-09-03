@@ -22,6 +22,11 @@ public class DialogBox extends HBox {
     private Label text;
     private ImageView displayPicture;
 
+    /**
+     * Initialises a Dialog box which is seen as a speech box in the UI
+     * @param s String to display in box
+     * @param i Image to display in box
+     */
     public DialogBox(String s, Image i) {
         text = new Label(s);
         text.setStyle("-fx-font-size: 16px;");
@@ -52,5 +57,4 @@ public class DialogBox extends HBox {
         dialogBox.flip();
         return dialogBox;
     }
-
 }

@@ -15,7 +15,7 @@ import denz.ui.Ui;
 public abstract class Command {
 
     /**
-     * Executes the command with the given context.
+     * Executes the command with the given context in CLI.
      *
      * @param tasks   the task list to operate on
      * @param ui      the user interface for displaying output
@@ -23,6 +23,16 @@ public abstract class Command {
      * @throws DenzException if an error occurs while executing the command
      */
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws DenzException;
+
+    /**
+     * Executes the command with the given context in GUI.
+     *
+     * @param tasks   the task list to operate on
+     * @param ui      the user interface for displaying output
+     * @param storage the storage handler for saving/loading tasks
+     * @throws DenzException if an error occurs while executing the command
+     */
+    public abstract String executeGui(TaskList tasks, Ui ui, Storage storage) throws DenzException;
 
     /**
      * Determines whether this command signals the application to exit.

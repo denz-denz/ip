@@ -25,6 +25,11 @@ public class ByeCommand extends Command {
         ui.showBye();
     }
 
+    @Override
+    public String executeGui(TaskList tasks, Ui ui, Storage storage) {
+        return ui.showByeGui();
+    }
+
     /**
      * Checks if this command signals the application to exit.
      *

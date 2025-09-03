@@ -25,4 +25,10 @@ public class NoOpCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         // Intentionally left blank: no operation performed.
     }
+
+    @Override
+    public String executeGui(TaskList tasks, Ui ui, Storage storage) {
+        // Intentionally left blank: no operation performed.
+        return "No operation!";
+    }
 }

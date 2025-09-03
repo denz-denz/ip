@@ -55,4 +55,13 @@ public class AddEventCommand extends Command {
         ui.showTaskAdded(t, tasks.size());
         storage.save(tasks);
     }
+
+    @Override
+    public String executeGui(TaskList tasks, Ui ui, Storage storage) throws AddException {
+        Task t = new Event(description, start, end);
+        tasks.add(t);
+        String reply = ui.showTaskAddedGui(t, tasks.size());
+        storage.save(tasks);
+        return reply;
+    }
 }

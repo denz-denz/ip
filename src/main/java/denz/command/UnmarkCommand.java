@@ -47,4 +47,17 @@ public class UnmarkCommand extends Command {
             ui.showError(e.getMessage());
         }
     }
+
+    @Override
+    public String executeGui(TaskList tasks, Ui ui, Storage storage) throws DenzException {
+        String reply;
+        try {
+            tasks.unmark(oneBased);
+            reply = ui.showUnmarkGui(tasks.get(oneBased));
+            storage.save(tasks);
+        } catch (DenzException e) {
+            reply = ui.showErrorGui(e.getMessage());
+        }
+        return reply;
+    }
 }

@@ -39,4 +39,12 @@ public class DeleteCommand extends Command {
         ui.showRemoved(removed, tasks.size());
         storage.save(tasks);
     }
+
+    @Override
+    public String executeGui(TaskList tasks, Ui ui, Storage storage) throws DenzException {
+        Task removed = tasks.delete(oneBased); // may throw DeleteException
+        String reply = ui.showRemovedGui(removed, tasks.size());
+        storage.save(tasks);
+        return reply;
+    }
 }

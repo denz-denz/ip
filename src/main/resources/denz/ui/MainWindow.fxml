@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="denz.ui.MainWindow"
+            prefWidth="500.0" prefHeight="600.0">
+    <children>
+        <!-- Scrollable chat area -->
+        <ScrollPane fx:id="scrollPane"
+                    fitToWidth="true"
+                    hbarPolicy="NEVER" vbarPolicy="ALWAYS"
+                    AnchorPane.topAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0"
+                    AnchorPane.bottomAnchor="60.0">
+            <content>
+                <VBox fx:id="dialogContainer" spacing="6"/>
+            </content>
+        </ScrollPane>
+
+        <!-- Input bar -->
+        <TextField fx:id="userInput"
+                   prefHeight="40.0"
+                   promptText="Type your message…"
+                   AnchorPane.leftAnchor="10.0"
+                   AnchorPane.rightAnchor="90.0"
+                   AnchorPane.bottomAnchor="10.0"
+                   onAction="#handleUserInput"/>
+
+        <Button fx:id="sendButton" text="Send"
+                defaultButton="true"
+                prefWidth="70.0"
+                AnchorPane.rightAnchor="10.0"
+                AnchorPane.bottomAnchor="10.0"
+                onAction="#handleUserInput"/>
+    </children>
+</AnchorPane>

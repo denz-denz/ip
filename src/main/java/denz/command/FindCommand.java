@@ -42,4 +42,16 @@ public class FindCommand extends Command {
         }
         ui.show(tasks.render(matches));
     }
+
+    @Override
+    public String executeGui(TaskList tasks, Ui ui, Storage storage) {
+        List<Task> matches = tasks.find(keyword);
+        String reply;
+        if (matches.isEmpty()) {
+            reply = ui.showGui("No matching tasks found for: " + keyword);
+            return reply;
+        }
+        reply = ui.showGui(tasks.render(matches));
+        return reply;
+    }
 }

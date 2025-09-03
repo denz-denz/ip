@@ -49,4 +49,13 @@ public class AddDeadlineCommand extends Command {
         ui.showTaskAdded(t, tasks.size());
         storage.save(tasks);
     }
+
+    @Override
+    public String executeGui(TaskList tasks, Ui ui, Storage storage) throws AddException {
+        Task t = new Deadline(description, by);
+        tasks.add(t);
+        String reply = ui.showTaskAddedGui(t, tasks.size());
+        storage.save(tasks);
+        return reply;
+    }
 }

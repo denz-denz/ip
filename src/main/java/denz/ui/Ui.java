@@ -59,17 +59,25 @@ public class Ui {
         System.out.println(msg);
     }
 
-    /**
-     * Displays an error message.
-     *
-     * @param msg the error message to show
-     */
-    public void showError(String msg) {
-        System.out.println(msg);
+    public String showGui(String msg) {
+        return msg;
     }
 
     /**
-     * Displays a rendered list of tasks.
+     * Displays an error message.
+     *
+     * @param error the error message to show
+     */
+    public void showError(String error) {
+        System.out.println(error);
+    }
+
+    public String showErrorGui(String error) {
+        return error;
+    }
+
+    /**
+     * Displays a rendered list of tasks for CLI.
      *
      * @param renderedList the string representation of tasks
      */
@@ -78,19 +86,44 @@ public class Ui {
     }
 
     /**
-     * Displays confirmation after a task has been added.
+     * Displays a rendered list of tasks for GUI.
+     *
+     * @param renderedList the string representation of tasks
+     */
+    public String showListGui(String renderedList) {
+        return renderedList;
+    }
+
+    /**
+     * Displays confirmation after a task has been added for CLI.
      *
      * @param t    the task that was added
      * @param size the new size of the task list
      */
     public void showTaskAdded(Task t, int size) {
         System.out.println("Roger! I have added this task:");
-        System.out.println("    " + t);
+        System.out.println(" " + t);
         System.out.println("Now you have " + size + " tasks in the list.");
     }
 
     /**
-     * Displays confirmation after a task has been removed.
+     * Displays confirmation after a task has been added for GUI.
+     *
+     * @param t    the task that was added
+     * @param size the new size of the task list
+     */
+    public String showTaskAddedGui(Task t, int size) {
+        return "Roger! I have added this task:\n"
+                + " "
+                + t.toString()
+                + "\n"
+                + "Now you have "
+                + size
+                + " tasks in the list.";
+    }
+
+    /**
+     * Displays confirmation after a task has been removed for CLI.
      *
      * @param removed the task that was removed
      * @param size    the new size of the task list
@@ -101,8 +134,24 @@ public class Ui {
         System.out.println("Now you have " + size + " tasks in the list");
     }
 
+
     /**
-     * Displays confirmation after a task has been marked as done.
+     * Displays confirmation after a task has been removed for GUI.
+     *
+     * @param removed the task that was removed
+     * @param size    the new size of the task list
+     */
+    public String showRemovedGui(Task removed, int size) {
+        return "Alright slacker, i have removed this task:\n"
+                + removed
+                + "\n"
+                + "Now you have "
+                + size
+                + " tasks in the list";
+    }
+
+    /**
+     * Displays confirmation after a task has been marked as done for CLI.
      *
      * @param t the task that was marked
      */
@@ -112,7 +161,17 @@ public class Ui {
     }
 
     /**
-     * Displays confirmation after a task has been unmarked.
+     * Displays confirmation after a task has been marked as done for GUI.
+     *
+     * @param t the task that was marked
+     */
+    public String showMarkGui(Task t) {
+        return "Yay! I have successfully marked this task as done:\n"
+                + t;
+    }
+
+    /**
+     * Displays confirmation after a task has been unmarked for CLI.
      *
      * @param t the task that was unmarked
      */
@@ -122,12 +181,33 @@ public class Ui {
     }
 
     /**
-     * Displays the farewell message when exiting the program.
+     * Displays confirmation after a task has been unmarked for GUI.
+     *
+     * @param t the task that was unmarked
+     */
+    public String showUnmarkGui(Task t) {
+        return "Yay! I have successfully unmarked this task as done:\n"
+                + t;
+    }
+
+    /**
+     * Displays the farewell message when exiting the program for CLI.
      */
     public void showBye() {
         System.out.println(LINE);
-        System.out.println("    Finally, time to take a break!");
+        System.out.println("Finally, time to take a break!");
         System.out.println(LINE);
+    }
+
+    /**
+     * Displays the farewell message when exiting the program for GUI.
+     */
+    public String showByeGui() {
+        return LINE
+                + "\n"
+                + "Finally, time to take a break!"
+                + "\n"
+                + LINE;
     }
 
     /**

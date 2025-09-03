@@ -31,13 +31,6 @@ public class Denz {
         this.ui = new Ui();
     }
 
-    //empty constructor for javaFx
-    public Denz() {
-        this.storage = null;
-        this.tasks = null;
-        this.ui = null;
-    }
-
     /**
      * Runs the main application loop. This method:
      * <ul>
@@ -78,7 +71,13 @@ public class Denz {
     /**
      * Generates a response for the user's chat message.
      */
-    public String getResponse(String input) {
-        return "Denz heard: " + input;
+    public String getResponse(String input) throws DenzException {
+        try {
+            Command c = Parser.parse(input);
+            String reply = c.executeGui(tasks, ui, storage);
+            return "Denz heard you!! " + reply;
+        } catch (DenzException e) {
+            return ui.showErrorGui(e.getMessage());
+        }
     }
 }

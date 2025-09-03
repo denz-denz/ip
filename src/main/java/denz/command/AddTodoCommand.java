@@ -44,4 +44,13 @@ public class AddTodoCommand extends Command {
         ui.showTaskAdded(t, tasks.size());
         storage.save(tasks);
     }
+
+    @Override
+    public String executeGui(TaskList tasks, Ui ui, Storage storage) throws AddException {
+        Task t = new Todo(description);
+        tasks.add(t);
+        String reply = ui.showTaskAddedGui(t, tasks.size());
+        storage.save(tasks);
+        return reply;
+    }
 }
