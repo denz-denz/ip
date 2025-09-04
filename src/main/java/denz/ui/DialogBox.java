@@ -54,9 +54,9 @@ public class DialogBox extends HBox {
         dialog.setText(text);
         displayPicture.setImage(img);
         dialog.setWrapText(true);
-        dialog.setTextOverrun(OverrunStyle.CLIP);   // no "…"
-        dialog.setMaxWidth(Double.MAX_VALUE);       // let it expand
-        HBox.setHgrow(dialog, Priority.ALWAYS);     // use remaining row width
+        dialog.setTextOverrun(OverrunStyle.CLIP); // no "…"
+        dialog.setMaxWidth(Double.MAX_VALUE); // let it expand
+        HBox.setHgrow(dialog, Priority.ALWAYS); // use remaining row width
         HBox.setHgrow(spacer, Priority.ALWAYS);
         getChildren().clear();
         getChildren().addAll(spacer, dialog, displayPicture);
