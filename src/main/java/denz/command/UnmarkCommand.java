@@ -14,15 +14,15 @@ import denz.ui.Ui;
  */
 public class UnmarkCommand extends Command {
     /** The one-based index of the task to unmark. */
-    private final int oneBased;
+    private final int taskNumber;
 
     /**
      * Constructs an {@code UnmarkCommand}.
      *
-     * @param oneBased the one-based index of the task to unmark
+     * @param taskNumber the one-based index of the task to unmark
      */
-    public UnmarkCommand(int oneBased) {
-        this.oneBased = oneBased;
+    public UnmarkCommand(int taskNumber) {
+        this.taskNumber = taskNumber;
     }
 
     /**
@@ -40,8 +40,8 @@ public class UnmarkCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DenzException {
         try {
-            tasks.unmark(oneBased);
-            ui.showUnmark(tasks.get(oneBased));
+            tasks.unmark(taskNumber);
+            ui.showUnmark(tasks.get(taskNumber));
             storage.save(tasks);
         } catch (DenzException e) {
             ui.showError(e.getMessage());
@@ -52,8 +52,8 @@ public class UnmarkCommand extends Command {
     public String executeGui(TaskList tasks, Ui ui, Storage storage) throws DenzException {
         String reply;
         try {
-            tasks.unmark(oneBased);
-            reply = ui.showUnmarkGui(tasks.get(oneBased));
+            tasks.unmark(taskNumber);
+            reply = ui.showUnmarkGui(tasks.get(taskNumber));
             storage.save(tasks);
         } catch (DenzException e) {
             reply = ui.showErrorGui(e.getMessage());

@@ -49,6 +49,9 @@ public class DialogBox extends HBox {
             e.printStackTrace();
         }
 
+        assert dialog != null : "Dialog label not injected from FXML";
+        assert displayPicture != null : "Display picture not injected from FXML";
+
         this.setMaxWidth(Double.MAX_VALUE);
 
         dialog.setText(text);

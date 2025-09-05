@@ -41,6 +41,7 @@ public class Parser {
             return new NoOpCommand();
         }
         String[] parts = line.split("\\s+", 2);
+        assert parts.length > 0 : "Parser failed to split empty input";
         String cmd = parts[0].toLowerCase();
         String rest = (parts.length > 1) ? parts[1] : "";
 
