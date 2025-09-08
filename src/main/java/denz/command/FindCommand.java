@@ -40,7 +40,7 @@ public class FindCommand extends Command {
             ui.show("No matching tasks found for: " + keywords);
             return;
         }
-        ui.show(tasks.render(matches));
+        ui.show(tasks.formatTaskList(matches));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class FindCommand extends Command {
             reply = ui.showGui("No matching tasks found for: " + varArgsToString(keywords));
             return reply;
         }
-        reply = ui.showGui(tasks.render(matches));
+        reply = ui.showGui(tasks.formatTaskList(matches));
         return reply;
     }
     /**
