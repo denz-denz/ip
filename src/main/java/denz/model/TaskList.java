@@ -141,7 +141,6 @@ public class TaskList {
      *
      * @param matches Tasklist to be represented
      * @return String representation of tasklist provided
-<<<<<<< HEAD
      */
     public String displayList(List<Task> matches) {
         StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:");
