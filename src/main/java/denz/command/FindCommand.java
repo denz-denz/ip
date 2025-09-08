@@ -48,10 +48,24 @@ public class FindCommand extends Command {
         List<Task> matches = tasks.find(keywords);
         String reply;
         if (matches.isEmpty()) {
-            reply = ui.showGui("No matching tasks found for: " + keywords);
+            reply = ui.showGui("No matching tasks found for: " + varArgsToString(keywords));
             return reply;
         }
         reply = ui.showGui(tasks.render(matches));
         return reply;
+    }
+    /**
+     * Converts a string of varArgs into appropriate String of all keywords
+     *
+     * @param keywords   the keywords user pass in
+     * @return The String denz chatbot will output to show what keywords user has typed in
+     */
+    public String varArgsToString(String ... keywords) {
+        int length = keywords.length;
+        String res = "";
+        for (int i = 0; i < length; i++) {
+            res += keywords[i].toString() + " ";
+        }
+        return res;
     }
 }

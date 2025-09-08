@@ -2,6 +2,7 @@ package denz.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import denz.exception.DeleteException;
 import denz.exception.DenzException;
@@ -137,9 +138,10 @@ public class TaskList {
 
     /**
      * Renders a numbered list for found tasks.
+     *
      * @param matches Tasklist to be represented
      * @return String representation of tasklist provided
-     * */
+     */
     public String render(List<Task> matches) {
         StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:");
         for (int i = 0; i < matches.size(); i++) {
@@ -154,17 +156,12 @@ public class TaskList {
      * @param keywords Keywords to find task by
      * @return A list of task with that given keyword
      */
-    public List<Task> find(String ... keywords) {
-        List<Task> out = new ArrayList<>();
-        for (Task t : tasks) {
-            for (String key : keywords) {
-                if (t.getDescription().toLowerCase().contains(key)) {
-                    if (!out.contains(t)) {
-                        out.add(t);
-                    }
-                }
-            }
-        }
-        return out;
+    public List<Task> find(String... keywords) {
+        return Stream.of(keywords).map(word -> word.toLowerCase()) //convert each keyword into lowercase
+                .flatMap(word -> tasks.stream() //for each word, we return a stream of tasks
+                        .filter(t -> t.getDescription() //filtered by description
+                                .toLowerCase()
+                                .contains(word)))
+                .distinct().toList();
     }
 }
