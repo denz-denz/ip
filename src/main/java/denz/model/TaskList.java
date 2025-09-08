@@ -74,12 +74,12 @@ public class TaskList {
     /**
      * Deletes and returns the task at the given one-based index.
      *
-     * @param oneBased One-based index of the task to delete.
+     * @param taskNumber One-based index of the task to delete.
      * @return The removed {@link Task}.
      * @throws DeleteException If the index is invalid.
      */
-    public Task delete(int oneBased) throws DeleteException {
-        int idx = oneBased - 1;
+    public Task delete(int taskNumber) throws DeleteException {
+        int idx = taskNumber - 1;
         if (idx < 0 || idx >= tasks.size()) {
             throw new DeleteException("invalid task number!!");
         }

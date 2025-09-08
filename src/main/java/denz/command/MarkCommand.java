@@ -14,10 +14,11 @@ public class MarkCommand extends Command {
     /**
      * Creates a {@code MarkCommand} to mark the specified task.
      *
-     * @param oneBased the one-based index of the task to mark
+     * @param taskNumber the one-based index of the task to mark
      */
-    public MarkCommand(int oneBased) {
-        this.taskNumber = oneBased;
+
+    public MarkCommand(int taskNumber) {
+        this.taskNumber = taskNumber;
     }
 
     /**
