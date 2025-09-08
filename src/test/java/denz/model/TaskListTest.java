@@ -27,7 +27,7 @@ public class TaskListTest {
                 "Here is everything you have on your plate :(" + System.lineSeparator()
                         + "1. [T] [ ] read book" + System.lineSeparator()
                         + "2. [T] [ ] buy milk";
-        assertEquals(expected, list.formatTaskList());
+        assertEquals(expected, list.displayList());
     }
 
     @Test
@@ -84,7 +84,7 @@ public class TaskListTest {
                 "Here is everything you have on your plate :(" + System.lineSeparator()
                         + "1. [T] [ ] A" + System.lineSeparator()
                         + "2. [T] [ ] C";
-        assertEquals(expected, list.formatTaskList());
+        assertEquals(expected, list.displayList());
     }
 
     @Test

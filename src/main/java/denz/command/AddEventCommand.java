@@ -35,7 +35,7 @@ public class AddEventCommand extends Command {
         this.start = start;
         this.end = end;
         if (!end.isAfter(start)) {
-            throw new AddException("denz.model.Event end must be after start.");
+            throw new AddException("Event end must be after start.");
         }
     }
 

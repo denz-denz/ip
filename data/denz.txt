@@ -1,5 +1,5 @@
-T|0|gym
-T|0|gym
+T|1|gym
+T|1|gym
 T|0|gym
 T|0|gym
 T|0|gym
@@ -8,6 +8,9 @@ T|0|gym
 T|0|eat
 T|0|gym
 T|0|eat
+T|0|gym
+T|0|gym
+T|0|gym
 T|0|gym
 T|0|gym
 T|0|gym

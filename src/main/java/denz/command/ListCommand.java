@@ -19,12 +19,12 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.show(tasks.formatTaskList());
+        ui.show(tasks.displayList());
     }
 
     @Override
     public String executeGui(TaskList tasks, Ui ui, Storage storage) {
-        return ui.showGui(tasks.formatTaskList());
+        return ui.showGui(tasks.displayList());
     }
 
 }

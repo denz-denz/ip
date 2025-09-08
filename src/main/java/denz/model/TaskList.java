@@ -127,7 +127,7 @@ public class TaskList {
      *
      * @return A string representation of all tasks in the list.
      */
-    public String formatTaskList() {
+    public String displayList() {
         StringBuilder sb = new StringBuilder("Here is everything you have on your plate :(");
         for (int i = 0; i < tasks.size(); i++) {
             sb.append("\n").append(i + 1).append(". ").append(tasks.get(i));
@@ -140,7 +140,7 @@ public class TaskList {
      * @param matches Tasklist to be represented
      * @return String representation of tasklist provided
      * */
-    public String formatTaskList(List<Task> matches) {
+    public String displayList(List<Task> matches) {
         StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:");
         for (int i = 0; i < matches.size(); i++) {
             sb.append("\n").append(i + 1).append(". ").append(matches.get(i));
