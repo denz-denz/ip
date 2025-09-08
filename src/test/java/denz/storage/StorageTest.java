@@ -23,7 +23,7 @@ public class StorageTest {
 
         TaskList loaded = storage.load();
         assertEquals(list.size(), loaded.size());
-        assertEquals(list.render(), loaded.render());
+        assertEquals(list.displayList(), loaded.displayList());
     }
 
     @Test

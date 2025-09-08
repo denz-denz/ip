@@ -11,15 +11,15 @@ import denz.ui.Ui;
  */
 public class DeleteCommand extends Command {
     /** One-based index of the task to delete. */
-    private final int oneBased;
+    private final int taskNumber;
 
     /**
      * Constructs a {@code DeleteCommand} with the given index.
      *
-     * @param oneBased the one-based index of the task to delete
+     * @param taskNumber the one-based index of the task to delete
      */
-    public DeleteCommand(int oneBased) {
-        this.oneBased = oneBased;
+    public DeleteCommand(int taskNumber) {
+        this.taskNumber = taskNumber;
     }
 
     /**
@@ -35,14 +35,14 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DenzException {
-        Task removed = tasks.delete(oneBased); // may throw DeleteException
+        Task removed = tasks.delete(taskNumber); // may throw DeleteException
         ui.showRemoved(removed, tasks.size());
         storage.save(tasks);
     }
 
     @Override
     public String executeGui(TaskList tasks, Ui ui, Storage storage) throws DenzException {
-        Task removed = tasks.delete(oneBased); // may throw DeleteException
+        Task removed = tasks.delete(taskNumber); // may throw DeleteException
         String reply = ui.showRemovedGui(removed, tasks.size());
         storage.save(tasks);
         return reply;

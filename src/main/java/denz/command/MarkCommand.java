@@ -9,7 +9,7 @@ import denz.ui.Ui;
  * Represents a command that marks a task as completed in the task list.
  */
 public class MarkCommand extends Command {
-    private final int oneBased;
+    private final int taskNumber;
 
     /**
      * Creates a {@code MarkCommand} to mark the specified task.
@@ -17,7 +17,7 @@ public class MarkCommand extends Command {
      * @param oneBased the one-based index of the task to mark
      */
     public MarkCommand(int oneBased) {
-        this.oneBased = oneBased;
+        this.taskNumber = oneBased;
     }
 
     /**
@@ -33,8 +33,8 @@ public class MarkCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DenzException {
         try {
-            tasks.mark(oneBased);
-            ui.showMark(tasks.get(oneBased));
+            tasks.mark(taskNumber);
+            ui.showMark(tasks.get(taskNumber));
             storage.save(tasks);
         } catch (DenzException e) {
             ui.showError(e.getMessage());
@@ -45,8 +45,8 @@ public class MarkCommand extends Command {
     public String executeGui(TaskList tasks, Ui ui, Storage storage) throws DenzException {
         String reply;
         try {
-            tasks.mark(oneBased);
-            reply = ui.showMarkGui(tasks.get(oneBased));
+            tasks.mark(taskNumber);
+            reply = ui.showMarkGui(tasks.get(taskNumber));
             storage.save(tasks);
         } catch (DenzException e) {
             reply = ui.showErrorGui(e.getMessage());

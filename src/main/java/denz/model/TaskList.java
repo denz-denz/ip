@@ -42,15 +42,15 @@ public class TaskList {
     /**
      * Retrieves the task at the given one-based index.
      *
-     * @param oneBased One-based index of the task to retrieve.
+     * @param taskNumber One-based index of the task to retrieve.
      * @return The {@link Task} at the specified index.
      * @throws DenzException If the index is out of range.
      */
-    public Task get(int oneBased) throws DenzException {
-        if (oneBased <= 0 || oneBased > tasks.size()) {
+    public Task get(int taskNumber) throws DenzException {
+        if (taskNumber <= 0 || taskNumber > tasks.size()) {
             throw new DenzException("Invalid number, unable to get task!");
         }
-        return tasks.get(oneBased - 1);
+        return tasks.get(taskNumber - 1);
     }
 
     /**
@@ -89,11 +89,11 @@ public class TaskList {
     /**
      * Marks the task at the given one-based index as done.
      *
-     * @param oneBased One-based index of the task to mark.
+     * @param taskNumber One-based index of the task to mark.
      * @throws MarkException If the index is invalid or the task is already marked as done.
      */
-    public void mark(int oneBased) throws MarkException {
-        int idx = oneBased - 1;
+    public void mark(int taskNumber) throws MarkException {
+        int idx = taskNumber - 1;
         if (idx < 0 || idx >= tasks.size()) {
             throw new MarkException("invalid task number!!");
         }
@@ -107,11 +107,11 @@ public class TaskList {
     /**
      * Unmarks the task at the given one-based index (sets it to not done).
      *
-     * @param oneBased One-based index of the task to unmark.
+     * @param taskNumber One-based index of the task to unmark.
      * @throws MarkException If the index is invalid or the task is not marked.
      */
-    public void unmark(int oneBased) throws MarkException {
-        int idx = oneBased - 1;
+    public void unmark(int taskNumber) throws MarkException {
+        int idx = taskNumber - 1;
         if (idx < 0 || idx >= tasks.size()) {
             throw new MarkException("Invalid task number!!");
         }
@@ -127,7 +127,7 @@ public class TaskList {
      *
      * @return A string representation of all tasks in the list.
      */
-    public String render() {
+    public String displayList() {
         StringBuilder sb = new StringBuilder("Here is everything you have on your plate :(");
         for (int i = 0; i < tasks.size(); i++) {
             sb.append("\n").append(i + 1).append(". ").append(tasks.get(i));
@@ -140,7 +140,7 @@ public class TaskList {
      * @param matches Tasklist to be represented
      * @return String representation of tasklist provided
      * */
-    public String render(List<Task> matches) {
+    public String displayList(List<Task> matches) {
         StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:");
         for (int i = 0; i < matches.size(); i++) {
             sb.append("\n").append(i + 1).append(". ").append(matches.get(i));
