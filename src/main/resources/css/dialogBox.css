@@ -18,8 +18,12 @@
     /* Ensure text wraps and grows */
     -fx-wrap-text: true;
     -fx-max-width: 320px; /* Prevent bubble from stretching across screen */
+<<<<<<< HEAD
+=======
     -fx-min-height: Region.USE_PREF_SIZE; /* Grow vertically with content */
+>>>>>>> origin/master
 }
+
 
 /* User (right) bubble — leafy tone + a “tail” hint via asymmetric radius */
 .user-bubble {

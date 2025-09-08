@@ -59,6 +59,7 @@ public class DialogBox extends HBox {
         dialog.setWrapText(true);
         dialog.setTextOverrun(OverrunStyle.CLIP); // no "…"
         dialog.setMaxWidth(Double.MAX_VALUE); // let it expand
+        dialog.setMinHeight(Region.USE_PREF_SIZE);
         HBox.setHgrow(dialog, Priority.ALWAYS); // use remaining row width
         HBox.setHgrow(spacer, Priority.ALWAYS);
         getChildren().clear();
