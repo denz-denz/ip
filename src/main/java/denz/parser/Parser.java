@@ -13,12 +13,14 @@ import denz.command.FindCommand;
 import denz.command.ListCommand;
 import denz.command.MarkCommand;
 import denz.command.NoOpCommand;
+import denz.command.RemindCommand;
 import denz.command.UnmarkCommand;
 import denz.exception.AddException;
 import denz.exception.ByeException;
 import denz.exception.DenzException;
 import denz.exception.FindException;
 import denz.exception.IndexException;
+import denz.exception.RemindException;
 import denz.util.DateTimeUtil;
 
 
@@ -59,8 +61,43 @@ public class Parser {
             return parseDelete(rest);
         } else if (cmd.equals("find")) {
             return parseFind(line);
+        } else if (cmd.equals("remind")) {
+            return parseRemind(line);
         } else {
             throw new DenzException("I have no idea what you want: " + cmd);
+        }
+    }
+
+    /**
+     * Parses the raw user input for the {@code remind} command.
+     * <p>
+     * Expected formats:
+     * <ul>
+     *     <li>{@code remind} – creates a {@link RemindCommand} with the default limit of 10.</li>
+     *     <li>{@code remind <limit>} – creates a {@link RemindCommand} with the specified integer limit.</li>
+     * </ul>
+     * If the input contains more than one argument after {@code remind},
+     * or if the limit is not a valid integer, a {@link RemindException} is thrown.
+     *
+     * @param fullLine the full user input line starting with the {@code remind} keyword
+     * @return a {@link RemindCommand} constructed from the parsed input
+     * @throws RemindException if the input is invalid (too many arguments or non-integer limit)
+     */
+
+    public static Command parseRemind(String fullLine) throws RemindException{
+        String line = fullLine.trim();
+        String[] parts = line.split("\\s+");
+        if (parts.length > 2) {
+            throw new RemindException("Please only give me one chosen limit to have to remind you about the task!!");
+        }
+        if (parts.length == 1) {
+            return new RemindCommand();
+        }
+        try {
+            int limit = Integer.valueOf(parts[1]);
+            return new RemindCommand(limit);
+        } catch (NumberFormatException e) {
+            throw new RemindException("Use an integer as a limit!");
         }
     }
 
