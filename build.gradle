@@ -12,6 +12,8 @@ repositories {
 
 checkstyle {
     toolVersion = '11.0.0'
+    configDirectory = file("$rootDir/config/checkstyle")
+    configProperties = ['suppressionFile': file("$rootDir/config/checkstyle/suppressions.xml").absolutePath]
 }
 
 dependencies {
