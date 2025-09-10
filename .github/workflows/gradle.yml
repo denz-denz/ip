@@ -32,14 +32,5 @@ jobs:
       - name: Build and Check
         run: ./gradlew --no-daemon clean check
 
-      # (Optional) IO redirection tests; keep only if you have text-ui-test/
 
-      - name: Install dos2unix (macOS)
-        if: runner.os == 'macOS'
-        run: brew install dos2unix
-
-      - name: Text UI tests (*nix/macOS)
-        if: runner.os == 'Linux' || runner.os == 'macOS'
-        working-directory: ${{ github.workspace }}/text-ui-test
-        run: ./runtest.sh
 
