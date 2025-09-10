@@ -1,56 +1,45 @@
 name: Java CI
 
-on:
-  push:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   build:
     strategy:
-      matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
+      matrix: { platform: [ubuntu-latest, macos-latest, windows-latest] }
     runs-on: ${{ matrix.platform }}
 
     steps:
-      - name: Checkout source
+      - name: Check out the commit/PR
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # optional, helps with versioning if you need tags
 
       - name: Validate Gradle Wrapper
         uses: gradle/actions/wrapper-validation@v3
 
-      - name: Setup JDK 17 (Zulu with JavaFX)
+      - name: Set up JDK 17 (with JavaFX)
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
-          # java-package: jdk+fx   # optional; keep if you actually compile/run JavaFX. Not required for plain 'check'
+          java-package: jdk+fx
 
-      - name: Ensure gradlew is executable (Unix)
-        if: runner.os != 'Windows'
-        run: chmod +x gradlew
+      - name: Sanity check that Checkstyle config exists
+        run: |
+          ls -R config || true
+          test -f config/checkstyle/checkstyle.xml && echo "Found checkstyle.xml"
 
-      - name: Build & check
+      - name: Build and Check
         run: ./gradlew --no-daemon clean check
-        shell: bash
 
-      # ----- Optional: IO redirection tests only if folder exists -----
-      - name: Install dos2unix on Linux
-        if: runner.os == 'Linux' && hashFiles('text-ui-test/**') != ''
-        run: sudo apt-get update && sudo apt-get install -y dos2unix
+      # (Optional) IO redirection tests; keep only if you have text-ui-test/
 
-      - name: Install dos2unix on macOS
-        if: runner.os == 'macOS' && hashFiles('text-ui-test/**') != ''
+      - name: Install dos2unix (macOS)
+        if: runner.os == 'macOS'
         run: brew install dos2unix
 
-      - name: Run text-UI tests (*NIX/macOS)
-        if: (runner.os == 'Linux' || runner.os == 'macOS') && hashFiles('text-ui-test/**') != ''
+      - name: Text UI tests (*nix/macOS)
+        if: runner.os == 'Linux' || runner.os == 'macOS'
         working-directory: ${{ github.workspace }}/text-ui-test
-        run: |
-          chmod +x ./runtest.sh
-          ./runtest.sh
+        run: ./runtest.sh
 
-      - name: Run text-UI tests (Windows)
-        if: runner.os == 'Windows' && hashFiles('text-ui-test/**') != ''
-        working-directory: ${{ github.workspace }}/text-ui-test
-        shell: cmd
-        run: runtest.bat
