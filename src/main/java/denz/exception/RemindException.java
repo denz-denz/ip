@@ -16,7 +16,7 @@ package denz.exception;
  * @since 9/9/25
  */
 public class RemindException extends DenzException {
-  public RemindException(String message) {
-    super(message);
-  }
+    public RemindException(String message) {
+        super(message);
+    }
 }

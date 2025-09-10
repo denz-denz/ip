@@ -84,7 +84,7 @@ public class Parser {
      * @throws RemindException if the input is invalid (too many arguments or non-integer limit)
      */
 
-    public static Command parseRemind(String fullLine) throws RemindException{
+    public static Command parseRemind(String fullLine) throws RemindException {
         String line = fullLine.trim();
         String[] parts = line.split("\\s+");
         if (parts.length > 2) {
