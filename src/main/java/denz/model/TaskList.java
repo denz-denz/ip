@@ -3,6 +3,7 @@ package denz.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import denz.exception.DeleteException;
@@ -167,44 +168,24 @@ public class TaskList {
     }
 
     /**
-     * Returns a list of tasks that fall within the specified reminder window.
-     * <p>
-     * Iterates over all tasks in the task list and selects:
-     * <ul>
-     *     <li>{@link denz.model.Deadline} tasks whose due dates are within
-     *     the next {@code limit} days.</li>
-     *     <li>{@link denz.model.Event} tasks whose start dates are within
-     *     the next {@code limit} days.</li>
-     * </ul>
-     * Other task types (e.g., {@link denz.model.Todo}) are ignored since
-     * they do not have a date associated with them.
-     * <p>
-     * The comparison is done relative to the current system time
-     * ({@link java.time.LocalDateTime#now()}).
+     * Returns a list of tasks that have deadlines or start dates
+     * within the given number of days from now.
      *
-     * @param limit the number of days ahead to check for deadlines or events
-     * @return a list of tasks with dates falling within the reminder window;
-     *         the list is empty if no such tasks exist
+     * <p>AI-assisted enhancement:
+     * Suggested by ChatGPT to use streams for cleaner filtering
+     * and avoid duplicate calls to current.plusDays(limit).
+     *
+     * @param limit number of days ahead to check
+     * @return list of upcoming tasks
      */
     public List<Task> remind(int limit) {
-        List<Task> output = new ArrayList<>();
-        LocalDateTime current = LocalDateTime.now();
-        for (Task t : tasks) {
-            if (t instanceof Deadline) {
-                Deadline deadlineTask = (Deadline) t;
-                LocalDateTime taskDueDate = deadlineTask.getDueDate();
-                if (taskDueDate.isBefore(current.plusDays(limit))) {
-                    output.add(t);
-                }
-            }
-            if (t instanceof Event) {
-                Event eventTask = (Event) t;
-                LocalDateTime taskStartDate = eventTask.getStartDate();
-                if (taskStartDate.isBefore(current.plusDays(limit))) {
-                    output.add(t);
-                }
-            }
-        }
-        return output;
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime threshold = now.plusDays(limit);
+        return tasks.stream()
+                .filter(t -> (t instanceof Deadline
+                        && ((Deadline) t).getDueDate().isBefore(threshold))
+                        || (t instanceof Event
+                        && ((Event) t).getStartDate().isBefore(threshold)))
+                .toList();
     }
 }

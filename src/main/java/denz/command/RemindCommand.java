@@ -72,7 +72,7 @@ public class RemindCommand extends Command {
     public String executeGui(TaskList tasks, Ui ui, Storage storage) {
         List<Task> reminderTaskLists = tasks.remind(limit);
         if (reminderTaskLists.isEmpty()) {
-            return ui.showGui("You lazy bum, have nothing coming up in the next " + limit + " days.");
+            return ui.showGui("You lazy bum, you have nothing coming up in the next " + limit + " days.");
         }
         return ui.showGui(tasks.displayList(reminderTaskLists));
     }
