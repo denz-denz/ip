@@ -3,7 +3,6 @@ package denz.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import denz.exception.DeleteException;
@@ -179,7 +178,7 @@ public class TaskList {
      * @param limit number of days ahead to check
      * @return list of upcoming tasks
      */
-    public List<Task> remind(int limit) throws RemindException{
+    public List<Task> remind(int limit) throws RemindException {
         if (limit < 0) {
             throw new RemindException("How can i remind you for negative days???");
         }

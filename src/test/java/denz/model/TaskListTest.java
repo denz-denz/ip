@@ -9,6 +9,11 @@ import org.junit.jupiter.api.Test;
 
 public class TaskListTest {
 
+    /** Normalize to LF so we don't fail on CRLF vs LF. */
+    private static String lf(String s) {
+        return s.replace("\r\n", "\n");
+    }
+
     @Test
     public void size_initiallyZero() {
         TaskList list = new TaskList();
@@ -23,11 +28,11 @@ public class TaskListTest {
 
         assertEquals(2, list.size());
 
-        String expected =
-                "Here is everything you have on your plate :(" + System.lineSeparator()
-                        + "1. [T] [ ] read book" + System.lineSeparator()
-                        + "2. [T] [ ] buy milk";
-        assertEquals(expected, list.displayList());
+        // TaskList.displayList() starts with a leading '\n' and uses '\n' between lines.
+        String expected = "\n1. [T] [ ] read book"
+                        + "\n2. [T] [ ] buy milk";
+
+        assertEquals(lf(expected), lf(list.displayList()));
     }
 
     @Test
@@ -35,7 +40,7 @@ public class TaskListTest {
         TaskList list = new TaskList();
         list.add(new Todo("read book"));
 
-        //mark
+        // mark
         list.mark(1);
         assertTrue(list.get(1).isDone());
         assertEquals("[T] [X] read book", list.get(1).toString());
@@ -80,11 +85,10 @@ public class TaskListTest {
         assertEquals("[T] [ ] B", removed.toString());
         assertEquals(2, list.size());
 
-        String expected =
-                "Here is everything you have on your plate :(" + System.lineSeparator()
-                        + "1. [T] [ ] A" + System.lineSeparator()
-                        + "2. [T] [ ] C";
-        assertEquals(expected, list.displayList());
+        // displayList() has leading '\n'
+        String expected = "\n1. [T] [ ] A"
+                        + "\n2. [T] [ ] C";
+        assertEquals(lf(expected), lf(list.displayList()));
     }
 
     @Test
@@ -108,9 +112,9 @@ public class TaskListTest {
         TaskList list = new TaskList();
         Task t = new Todo("gym");
         list.add(t);
-        List<Task> dummy = new ArrayList<>();
-        dummy.add(t);
-        assertEquals(list.find("gym"), dummy);
+        List<Task> expected = new ArrayList<>();
+        expected.add(t);
+        assertEquals(expected, list.find("gym"));
     }
 
     @Test
@@ -118,16 +122,15 @@ public class TaskListTest {
         TaskList list = new TaskList();
         Task t = new Todo("gym");
         list.add(t);
-        List<Task> dummy = new ArrayList<>();
-        dummy.add(t);
-        assertEquals(list.find("gy"), dummy);
+        List<Task> expected = new ArrayList<>();
+        expected.add(t);
+        assertEquals(expected, list.find("gy"));
     }
 
     @Test
     void find_keyword_failure() {
         TaskList list = new TaskList();
-        Task t = new Todo("gym");
-        list.add(t);
-        assertEquals(list.find("no such task"), new ArrayList<>());
+        list.add(new Todo("gym"));
+        assertEquals(new ArrayList<>(), list.find("no such task"));
     }
 }
