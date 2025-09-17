@@ -47,7 +47,7 @@ public class Denz {
                 String fullCommand = ui.readCommand();
                 ui.showLine();
                 Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
+                c.executeGui(tasks, ui, storage);
                 isExit = c.isExit();
             } catch (DenzException e) {
                 ui.showError(e.getMessage());

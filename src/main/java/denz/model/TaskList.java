@@ -131,7 +131,7 @@ public class TaskList {
      * @return A string representation of all tasks in the list.
      */
     public String displayList() {
-        StringBuilder sb = new StringBuilder("Here is everything you have on your plate :(");
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
             sb.append("\n").append(i + 1).append(". ").append(tasks.get(i));
         }

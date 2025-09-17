@@ -54,7 +54,7 @@ public class MainWindow {
         this.denz = d;
         assert denz != null : "Initialise a proper denz!";
         dialogContainer.getChildren().add(
-                DialogBox.getDenzDialog("Hello, I'm your dawg Denz\n" + "What can I do for you?\n", denzImage)
+                DialogBox.getDenzDialog("Eh, your dawg Denz here\n" + "What you want?\n", denzImage)
         );
     }
 

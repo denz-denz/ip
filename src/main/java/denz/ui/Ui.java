@@ -91,7 +91,7 @@ public class Ui {
      * @param renderedList the string representation of tasks
      */
     public String showListGui(String renderedList) {
-        return renderedList;
+        return "Remember do all these ah! " + renderedList;
     }
 
     /**
@@ -101,7 +101,7 @@ public class Ui {
      * @param size the new size of the task list
      */
     public void showTaskAdded(Task t, int size) {
-        System.out.println("Roger! I have added this task:");
+        System.out.println("Orh! I add this task liao...");
         System.out.println(" " + t);
         System.out.println("Now you have " + size + " tasks in the list.");
     }
@@ -113,7 +113,7 @@ public class Ui {
      * @param size the new size of the task list
      */
     public String showTaskAddedGui(Task t, int size) {
-        return "Roger! I have added this task:\n"
+        return "Orh! I add this task liao:\n"
                 + " "
                 + t.toString()
                 + "\n"
@@ -129,7 +129,7 @@ public class Ui {
      * @param size    the new size of the task list
      */
     public void showRemoved(Task removed, int size) {
-        System.out.println("Alright slacker, i have removed this task:");
+        System.out.println("Walao eh! You sure ah, i have removed this task:");
         System.out.println(removed);
         System.out.println("Now you have " + size + " tasks in the list");
     }
@@ -142,7 +142,7 @@ public class Ui {
      * @param size    the new size of the task list
      */
     public String showRemovedGui(Task removed, int size) {
-        return "Alright slacker, i have removed this task:\n"
+        return "Walao eh! You sure ah, i have removed this task:\n"
                 + removed
                 + "\n"
                 + "Now you have "
@@ -156,7 +156,7 @@ public class Ui {
      * @param t the task that was marked
      */
     public void showMark(Task t) {
-        System.out.println("Yay! I have successfully marked this task as done:");
+        System.out.println("Wah! Sui I have successfully marked this task as done liao:");
         System.out.println(t);
     }
 
@@ -166,7 +166,7 @@ public class Ui {
      * @param t the task that was marked
      */
     public String showMarkGui(Task t) {
-        return "Yay! I have successfully marked this task as done:\n"
+        return "Wah! Sui I have successfully marked this task as done liao:\n"
                 + t;
     }
 
@@ -186,7 +186,7 @@ public class Ui {
      * @param t the task that was unmarked
      */
     public String showUnmarkGui(Task t) {
-        return "Yay! I have successfully unmarked this task as done:\n"
+        return "Walao, then you mark just now for what. Ok lah done, unmark this task liao\n"
                 + t;
     }
 
@@ -205,7 +205,7 @@ public class Ui {
     public String showByeGui() {
         return LINE
                 + "\n"
-                + "Finally, time to take a break!"
+                + "Wah finally, time to take a break! I drink kopi first ah."
                 + "\n"
                 + LINE;
     }

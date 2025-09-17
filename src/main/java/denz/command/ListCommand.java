@@ -24,7 +24,7 @@ public class ListCommand extends Command {
 
     @Override
     public String executeGui(TaskList tasks, Ui ui, Storage storage) {
-        return ui.showGui(tasks.displayList());
+        return ui.showListGui(tasks.displayList());
     }
 
 }
