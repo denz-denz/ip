@@ -186,7 +186,7 @@ public class Ui {
      * @param t the task that was unmarked
      */
     public String showUnmarkGui(Task t) {
-        return "Walao, then you mark just now for what. Ok lah done, unmark this task liao\n"
+        return "Walao, then you mark just now for what. Ok lah done, unmark this task liao:\n"
                 + t;
     }
 

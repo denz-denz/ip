@@ -1,1 +1,2 @@
-T|0|A
+T|1|sleep
+D|0|homework|2025-09-17T14:00
