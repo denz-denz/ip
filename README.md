@@ -12,7 +12,7 @@ Your tasks are automatically saved between sessions, so you never lose them.
 2. Download the latest `denz.jar` from the [Releases] page of this repository.
 3. Copy the JAR file into an empty folder.
 4. Open a command window in that folder.
-5. Run the program with: java -jar denz.jar
+5. Run the program with: java -jar Denz.jar
 6. Start typing commands to manage your tasks!
 
 ---
