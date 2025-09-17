@@ -2,6 +2,7 @@ package denz.command;
 
 import java.util.List;
 
+import denz.exception.RemindException;
 import denz.model.Task;
 import denz.model.TaskList;
 import denz.storage.Storage;
@@ -52,11 +53,15 @@ public class RemindCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        List<Task> reminderTaskLists = tasks.remind(limit);
-        if (reminderTaskLists.isEmpty()) {
-            ui.show("You lazy bum, have nothing coming up in the next " + limit + " days.");
-        } else {
-            ui.show(tasks.displayList(reminderTaskLists));
+        try {
+            List<Task> reminderTaskLists = tasks.remind(limit);
+            if (reminderTaskLists.isEmpty()) {
+                ui.show("You lazy bum, have nothing coming up in the next " + limit + " days.");
+            } else {
+                ui.show(tasks.displayList(reminderTaskLists));
+            }
+        } catch (RemindException e) {
+            ui.showError(e.getMessage());
         }
     }
 
@@ -70,10 +75,14 @@ public class RemindCommand extends Command {
      */
     @Override
     public String executeGui(TaskList tasks, Ui ui, Storage storage) {
-        List<Task> reminderTaskLists = tasks.remind(limit);
-        if (reminderTaskLists.isEmpty()) {
-            return ui.showGui("You lazy bum, you have nothing coming up in the next " + limit + " days.");
+        try {
+            List<Task> reminderTaskLists = tasks.remind(limit);
+            if (reminderTaskLists.isEmpty()) {
+                return ui.showGui("You lazy bum, you have nothing coming up in the next " + limit + " days.");
+            }
+            return ui.showGui(tasks.displayList(reminderTaskLists));
+        } catch (RemindException e) {
+            return ui.showErrorGui(e.getMessage());
         }
-        return ui.showGui(tasks.displayList(reminderTaskLists));
     }
 }

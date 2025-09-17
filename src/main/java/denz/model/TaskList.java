@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import denz.exception.DeleteException;
 import denz.exception.DenzException;
 import denz.exception.MarkException;
+import denz.exception.RemindException;
 
 /**
  * Represents a list of {@link Task} objects.
@@ -178,7 +179,10 @@ public class TaskList {
      * @param limit number of days ahead to check
      * @return list of upcoming tasks
      */
-    public List<Task> remind(int limit) {
+    public List<Task> remind(int limit) throws RemindException{
+        if (limit < 0) {
+            throw new RemindException("How can i remind you for negative days???");
+        }
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime threshold = now.plusDays(limit);
         return tasks.stream()
