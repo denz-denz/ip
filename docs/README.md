@@ -1,7 +1,11 @@
 # Denz User Guide
 ![Denz UI](Ui.png)
 
-Denz is a simple chatbot that helps you manage your tasks efficiently from the Command Line Interface (CLI).  
+Denz is a simple chatbot that helps you manage your tasks efficiently.  
+It comes with both:
+- A **Command Line Interface (CLI)**, for quick command-based usage.
+- A **Graphical User Interface (GUI)** built with JavaFX, for a more user-friendly experience.
+
 It supports todos, deadlines, events, reminders, and more.  
 Your tasks are automatically saved between sessions, so you never lose them.
 
